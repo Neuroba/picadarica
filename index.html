@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PicadaRica — Bife Deshidratado Artesanal | Buenos Aires</title>
+<meta name="description" content="PicadaRica — jerky artesanal de cuadril argentino. 36g proteína, 0% azúcar, 100% carne vacuna. Hecho en Buenos Aires.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']},colors:{dark:{50:'#f8fafc',100:'#e2e8f0',200:'#cbd5e1',300:'#94a3b8',400:'#64748b',500:'#475569',600:'#334155',700:'#1e293b',800:'#0f172a',900:'#020617',950:'#010409'},brand:{red:'#e53e3e',amber:'#f59e0b','red-dark':'#c53030','red-glow':'rgba(229,62,62,0.25)','amber-glow':'rgba(245,158,11,0.2)'}}}}}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#020617;color:#e2e8f0;overflow-x:hidden;margin:0}
+
+/* ── AURORA ── */
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora-blob{position:absolute;border-radius:50%;filter:blur(130px);opacity:.11;animation:float 22s infinite ease-in-out}
+.aurora-blob:nth-child(1){width:620px;height:620px;background:#e53e3e;top:-15%;left:-12%;animation-delay:0s}
+.aurora-blob:nth-child(2){width:480px;height:480px;background:#f59e0b;top:35%;right:-12%;animation-delay:-6s}
+.aurora-blob:nth-child(3){width:380px;height:380px;background:#7f1d1d;bottom:-8%;left:28%;animation-delay:-12s}
+.aurora-blob:nth-child(4){width:300px;height:300px;background:linear-gradient(135deg,#e53e3e,#f59e0b);top:55%;right:5%;animation-delay:-18s;animation-duration:28s;opacity:.07!important}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(38px,-28px) scale(1.1)}66%{transform:translate(-18px,22px) scale(.9)}}
+
+/* ── GLASS ── */
+.glass{background:rgba(15,23,42,.45);backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.glass-strong{background:rgba(15,23,42,.7);backdrop-filter:blur(32px) saturate(200%);border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 20px 60px rgba(0,0,0,.4)}
+
+/* ── GRADIENT TEXT ── */
+.gradient-text{background:linear-gradient(135deg,#e53e3e 0%,#f59e0b 50%,#e53e3e 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:shimmer 7s ease-in-out infinite}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* ── GLOW ── */
+.glow-red{box-shadow:0 0 30px rgba(229,62,62,.22),0 0 60px rgba(229,62,62,.08)}
+.glow-amber{box-shadow:0 0 30px rgba(245,158,11,.18),0 0 60px rgba(245,158,11,.06)}
+
+/* ── HUD CARD CORNERS ── */
+.hud-card{position:relative;overflow:visible}
+.hud-card::before,.hud-card::after{content:'';position:absolute;width:14px;height:14px;pointer-events:none;transition:all .35s cubic-bezier(.16,1,.3,1);z-index:10}
+.hud-card::before{top:-2px;left:-2px;border-top:2px solid rgba(229,62,62,.55);border-left:2px solid rgba(229,62,62,.55)}
+.hud-card::after{bottom:-2px;right:-2px;border-bottom:2px solid rgba(245,158,11,.55);border-right:2px solid rgba(245,158,11,.55)}
+.hud-card:hover::before{width:22px;height:22px;border-color:rgba(229,62,62,1);box-shadow:0 0 10px rgba(229,62,62,.5)}
+.hud-card:hover::after{width:22px;height:22px;border-color:rgba(245,158,11,1);box-shadow:0 0 10px rgba(245,158,11,.5)}
+
+/* ── CYBER GRID ── */
+.cyber-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(229,62,62,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(229,62,62,.025) 1px,transparent 1px);background-size:80px 80px}
+
+/* ── SCAN LINES ── */
+body::after{content:'';position:fixed;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px)}
+
+/* ── NOISE ── */
+.noise::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.012;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ── CARD HOVER ── */
+.card-hover{transition:all .4s cubic-bezier(.25,.8,.25,1)}.card-hover:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 24px 72px rgba(229,62,62,.12)}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(38px);transition:all .85s cubic-bezier(.16,1,.3,1)}.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-38px);transition:all .85s cubic-bezier(.16,1,.3,1)}.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(38px);transition:all .85s cubic-bezier(.16,1,.3,1)}.reveal-right.visible{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(28px);transition:all .7s cubic-bezier(.16,1,.3,1)}
+.stagger.visible>*{opacity:1;transform:none}
+.stagger.visible>*:nth-child(1){transition-delay:.05s}.stagger.visible>*:nth-child(2){transition-delay:.12s}
+.stagger.visible>*:nth-child(3){transition-delay:.19s}.stagger.visible>*:nth-child(4){transition-delay:.26s}
+
+/* ── KINETIC HERO ── */
+.hero-word{display:inline-block;opacity:0;transform:translateY(48px) rotateX(38deg);transition:all .8s cubic-bezier(.16,1,.3,1)}.hero-word.show{opacity:1;transform:none}
+
+/* ── LANG BUTTON ── */
+.lang-btn{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.02em;font-family:'JetBrains Mono',monospace}
+.lang-btn.active{background:rgba(229,62,62,.2);color:#fca5a5}.lang-btn:not(.active){color:#475569}.lang-btn:hover:not(.active){color:#94a3b8}
+
+/* ── PULSE ── */
+.pulse-ring{position:relative}.pulse-ring::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(229,62,62,.4);animation:ring 2s infinite}
+@keyframes ring{0%{transform:scale(1);opacity:1}100%{transform:scale(1.8);opacity:0}}
+
+/* ── SYSTEM STATUS DOT ── */
+.sys-pulse{display:inline-block;width:5px;height:5px;border-radius:50%;background:#e53e3e;box-shadow:0 0 8px rgba(229,62,62,.9);animation:sys-blink 2.5s ease-in-out infinite}
+@keyframes sys-blink{0%,100%{opacity:1;box-shadow:0 0 8px rgba(229,62,62,.9)}50%{opacity:.3;box-shadow:none}}
+
+/* ── TICKER ── */
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-inner{display:flex;animation:ticker 30s linear infinite;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;font-size:10px}
+.ticker-inner:hover{animation-play-state:paused}
+
+/* ── SHINE BTN ── */
+.btn-shine{position:relative;overflow:hidden}
+.btn-shine::after{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:rgba(255,255,255,.16);transform:skewX(-20deg);transition:left .5s ease}
+.btn-shine:hover::after{left:120%}
+
+/* ── NEON SWEEP (featured price) ── */
+.neon-sweep{background:linear-gradient(rgba(15,23,42,.6),rgba(15,23,42,.6)) padding-box,linear-gradient(135deg,rgba(229,62,62,.5) 0%,rgba(245,158,11,.6) 33%,rgba(229,62,62,.5) 66%,rgba(245,158,11,.5) 100%) border-box!important;border:1px solid transparent!important;background-size:100% 100%,300% 100%!important;animation:nsweep 4s linear infinite}
+@keyframes nsweep{0%{background-position:0 0,0 50%}100%{background-position:0 0,300% 50%}}
+
+/* ── ACCORDION ── */
+.acc-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.16,1,.3,1)}
+.pain-glow{transition:all .3s}.pain-glow:hover{border-color:rgba(229,62,62,.3);box-shadow:0 0 40px rgba(229,62,62,.06)}
+
+/* ── BAR ── */
+.bar-fill{width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+
+/* ── CAROUSEL ── */
+.c-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease}.c-slide.active{opacity:1}
+
+/* ── MOBILE MENU ── */
+.mob-menu{position:fixed;inset:0;z-index:200;background:#020617;transform:translateX(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;padding:24px;border-left:1px solid rgba(255,255,255,.07)}
+.mob-menu.open{transform:translateX(0)}
+
+/* ── MOBILE responsive ── */
+@media(max-width:767px){section{padding-top:3.5rem!important;padding-bottom:3.5rem!important}}
+@media(max-width:639px){#hero-heading{font-size:2.1rem!important;line-height:1.12!important}}
+@media(max-width:767px){.aurora-blob:nth-child(1){width:280px!important;height:280px!important}.aurora-blob:nth-child(2){width:220px!important;height:220px!important}.aurora-blob:nth-child(3){width:180px!important;height:180px!important}}
+@media(hover:none){.card-hover:hover{transform:none!important;box-shadow:none!important}.hud-card:hover::before{width:14px!important;height:14px!important;box-shadow:none!important}.hud-card:hover::after{width:14px!important;height:14px!important;box-shadow:none!important}}
+@media(prefers-reduced-motion:reduce){.reveal,.bar-fill{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body class="noise">
+
+<!-- Aurora -->
+<div class="aurora">
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+</div>
+<div class="cyber-grid"></div>
+
+<!-- ═══ HEADER ═══ -->
+<header class="sticky top-0 z-50 glass border-b border-white/[.06]">
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#e53e3e,#c53030)">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;color:#fff">PR</span>
+      </div>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#f1f5f9">PicadaRica</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="#producto" class="text-sm text-dark-400 hover:text-dark-100 transition-colors">
+        <span data-lang="es">Producto</span><span data-lang="ru" class="hidden">Продукт</span><span data-lang="en" class="hidden">Product</span>
+      </a>
+      <a href="#para-quien" class="text-sm text-dark-400 hover:text-dark-100 transition-colors">
+        <span data-lang="es">¿Para quién?</span><span data-lang="ru" class="hidden">Для кого</span><span data-lang="en" class="hidden">For whom</span>
+      </a>
+      <a href="#proceso" class="text-sm text-dark-400 hover:text-dark-100 transition-colors">
+        <span data-lang="es">Proceso</span><span data-lang="ru" class="hidden">Процесс</span><span data-lang="en" class="hidden">Process</span>
+      </a>
+      <a href="#precios" class="text-sm text-dark-400 hover:text-dark-100 transition-colors">
+        <span data-lang="es">Precios</span><span data-lang="ru" class="hidden">Цены</span><span data-lang="en" class="hidden">Pricing</span>
+      </a>
+      <a href="#faq" class="text-sm text-dark-400 hover:text-dark-100 transition-colors">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <!-- System status -->
+      <div class="hidden sm:flex items-center gap-1.5 mr-1">
+        <span class="sys-pulse"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#475569;letter-spacing:.08em">LIVE</span>
+      </div>
+      <!-- Lang -->
+      <div class="flex items-center gap-0.5 glass rounded-lg p-1">
+        <button onclick="setLang('es')" class="lang-btn active" data-lang-btn="es">ES</button>
+        <button onclick="setLang('ru')" class="lang-btn" data-lang-btn="ru">RU</button>
+        <button onclick="setLang('en')" class="lang-btn" data-lang-btn="en">EN</button>
+      </div>
+      <a href="https://wa.me/541126466244?text=Hola!%20Me%20interesa%20PicadaRica" target="_blank"
+         class="btn-shine hidden sm:inline-flex items-center gap-2 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105"
+         style="background:linear-gradient(135deg,#e53e3e,#c53030)">
+        <span data-lang="es">Pedir</span><span data-lang="ru" class="hidden">Заказать</span><span data-lang="en" class="hidden">Order</span>
+        <iconify-icon icon="solar:chat-round-line-bold" style="font-size:15px"></iconify-icon>
+      </a>
+      <button onclick="openMob()" class="md:hidden p-2 text-dark-400 hover:text-dark-100">
+        <iconify-icon icon="solar:hamburger-menu-bold" style="font-size:20px"></iconify-icon>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MOBILE MENU ═══ -->
+<div id="mob-menu" class="mob-menu">
+  <div class="relative z-10 flex items-center justify-between mb-8">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#e53e3e,#c53030)">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;color:#fff">PR</span>
+      </div>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px">PicadaRica</span>
+    </div>
+    <button onclick="closeMob()" class="p-2 text-dark-400">
+      <iconify-icon icon="solar:close-square-bold" style="font-size:22px"></iconify-icon>
+    </button>
+  </div>
+  <nav class="relative z-10 flex flex-col gap-1 mb-8">
+    <a href="#producto"   onclick="closeMob()" class="py-4 border-b border-white/[.06] text-lg font-semibold hover:text-brand-red transition-colors" style="font-family:'Space Grotesk',sans-serif"><span data-lang="es">Producto</span><span data-lang="ru" class="hidden">Продукт</span><span data-lang="en" class="hidden">Product</span></a>
+    <a href="#para-quien" onclick="closeMob()" class="py-4 border-b border-white/[.06] text-lg font-semibold hover:text-brand-red transition-colors" style="font-family:'Space Grotesk',sans-serif"><span data-lang="es">¿Para quién?</span><span data-lang="ru" class="hidden">Для кого</span><span data-lang="en" class="hidden">For whom</span></a>
+    <a href="#proceso"    onclick="closeMob()" class="py-4 border-b border-white/[.06] text-lg font-semibold hover:text-brand-red transition-colors" style="font-family:'Space Grotesk',sans-serif"><span data-lang="es">Proceso</span><span data-lang="ru" class="hidden">Процесс</span><span data-lang="en" class="hidden">Process</span></a>
+    <a href="#precios"    onclick="closeMob()" class="py-4 border-b border-white/[.06] text-lg font-semibold hover:text-brand-red transition-colors" style="font-family:'Space Grotesk',sans-serif"><span data-lang="es">Precios</span><span data-lang="ru" class="hidden">Цены</span><span data-lang="en" class="hidden">Pricing</span></a>
+    <a href="#faq"        onclick="closeMob()" class="py-4 border-b border-white/[.06] text-lg font-semibold hover:text-brand-red transition-colors" style="font-family:'Space Grotesk',sans-serif">FAQ</a>
+  </nav>
+  <div class="relative z-10 flex gap-2 mb-6">
+    <button onclick="setLang('es');closeMob()" class="lang-btn active flex-1 py-2.5 rounded-lg border border-white/[.08] text-sm" data-lang-btn="es">ES</button>
+    <button onclick="setLang('ru');closeMob()" class="lang-btn flex-1 py-2.5 rounded-lg border border-white/[.08] text-sm" data-lang-btn="ru">RU</button>
+    <button onclick="setLang('en');closeMob()" class="lang-btn flex-1 py-2.5 rounded-lg border border-white/[.08] text-sm" data-lang-btn="en">EN</button>
+  </div>
+  <a href="https://wa.me/541126466244?text=Hola!%20Me%20interesa%20PicadaRica" target="_blank"
+     class="relative z-10 flex items-center justify-center gap-2 text-white py-4 rounded-xl font-bold text-base transition-all"
+     style="background:linear-gradient(135deg,#e53e3e,#c53030);font-family:'Space Grotesk',sans-serif">
+    <span data-lang="es">Pedir ahora</span><span data-lang="ru" class="hidden">Заказать сейчас</span><span data-lang="en" class="hidden">Order now</span>
+    <iconify-icon icon="solar:chat-round-line-bold" style="font-size:18px"></iconify-icon>
+  </a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16">
+  <!-- Dimmed product image -->
+  <img src="images/jerky-cone-1.jpg" class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="opacity:.04" alt="">
+  <div class="absolute inset-0 bg-gradient-to-b from-dark-900/20 via-transparent to-dark-900/60 pointer-events-none"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <!-- Badge -->
+    <div class="reveal mb-10 flex items-center justify-center gap-3">
+      <div class="h-px w-10 bg-gradient-to-r from-transparent to-brand-red"></div>
+      <span class="glass px-4 py-1.5 rounded-full text-xs tracking-[0.28em] uppercase" style="font-family:'JetBrains Mono',monospace;color:#fca5a5">
+        <span data-lang="es">Buenos Aires, Argentina</span>
+        <span data-lang="ru" class="hidden">Буэнос-Айрес, Аргентина</span>
+        <span data-lang="en" class="hidden">Buenos Aires, Argentina</span>
+      </span>
+      <div class="h-px w-10 bg-gradient-to-l from-transparent to-brand-red"></div>
+    </div>
+
+    <!-- Heading -->
+    <h1 class="mb-6" id="hero-heading">
+      <span class="block text-dark-300 font-light mb-2 reveal" style="font-family:'Inter',sans-serif;font-size:clamp(1rem,2.5vw,1.4rem);letter-spacing:.04em">
+        <span data-lang="es">El auténtico</span><span data-lang="ru" class="hidden">Настоящий</span><span data-lang="en" class="hidden">The authentic</span>
+      </span>
+      <span class="block font-black tracking-tight leading-none gradient-text" style="font-family:'Space Grotesk',sans-serif;font-size:clamp(3rem,12vw,8rem)">PICADARICA</span>
+      <span class="block text-dark-300 font-light mt-3 reveal" style="font-family:'Inter',sans-serif;font-size:clamp(.9rem,2vw,1.2rem);letter-spacing:.06em">
+        <span data-lang="es">bife deshidratado artesanal · Buenos Aires</span>
+        <span data-lang="ru" class="hidden">вяленый стейк · Буэнос-Айрес</span>
+        <span data-lang="en" class="hidden">artisan dried beef · Buenos Aires</span>
+      </span>
+    </h1>
+
+    <!-- Sub -->
+    <p class="reveal text-dark-400 max-w-2xl mx-auto mb-10 leading-relaxed" style="font-size:1rem">
+      <span data-lang="es">36 g de proteína · 0% azúcar · 100% carne vacuna.<br>Sin soja, sin glutamato, sin conservantes.</span>
+      <span data-lang="ru" class="hidden">36 г белка · 0% сахара · 100% говядина.<br>Без сои, без глутамата, без консервантов.</span>
+      <span data-lang="en" class="hidden">36g protein · 0% sugar · 100% beef.<br>No soy, no glutamate, no preservatives.</span>
+    </p>
+
+    <!-- CTA buttons -->
+    <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+      <a href="https://wa.me/541126466244?text=Hola!%20Me%20interesa%20PicadaRica" target="_blank"
+         class="btn-shine group flex items-center gap-3 text-white px-8 py-4 rounded-xl font-bold text-base transition-all hover:scale-105 glow-red"
+         style="background:linear-gradient(135deg,#e53e3e,#c53030);font-family:'Space Grotesk',sans-serif">
+        <iconify-icon icon="solar:chat-round-line-bold" style="font-size:18px" class="i-beat"></iconify-icon>
+        <span data-lang="es">Probá ahora</span><span data-lang="ru" class="hidden">Попробуй сейчас</span><span data-lang="en" class="hidden">Try now</span>
+        <iconify-icon icon="solar:arrow-right-bold" style="font-size:16px" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+      </a>
+      <a href="#producto"
+         class="flex items-center gap-2 glass hover:border-brand-red/40 text-dark-300 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all text-base"
+         style="font-family:'Space Grotesk',sans-serif">
+        <iconify-icon icon="solar:alt-arrow-down-bold" style="font-size:16px"></iconify-icon>
+        <span data-lang="es">Conocé más</span><span data-lang="ru" class="hidden">Узнать больше</span><span data-lang="en" class="hidden">Learn more</span>
+      </a>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="reveal stagger grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
+      <div class="hud-card glass-strong rounded-xl p-4 text-center card-hover">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#fca5a5;letter-spacing:.2em;margin-bottom:6px">PROTEÍNA</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:2.2rem;color:#f1f5f9;line-height:1">36<span style="font-size:1rem;color:#64748b">g</span></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#475569">/100g</div>
+      </div>
+      <div class="hud-card glass-strong rounded-xl p-4 text-center card-hover">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#fca5a5;letter-spacing:.2em;margin-bottom:6px">AZÚCAR</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:2.2rem;color:#f1f5f9;line-height:1">0<span style="font-size:1rem;color:#64748b">%</span></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#475569">added</div>
+      </div>
+      <div class="hud-card glass-strong rounded-xl p-4 text-center card-hover">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#fca5a5;letter-spacing:.2em;margin-bottom:6px"><span data-lang="es">VENCIM.</span><span data-lang="ru" class="hidden">СРОК</span><span data-lang="en" class="hidden">SHELF</span></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:2.2rem;color:#f1f5f9;line-height:1">3<span style="font-size:1rem;color:#64748b">mo</span></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#475569">shelf life</div>
+      </div>
+      <div class="hud-card glass-strong rounded-xl p-4 text-center card-hover">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#fca5a5;letter-spacing:.2em;margin-bottom:6px">CARNE</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:2.2rem;color:#f1f5f9;line-height:1">100<span style="font-size:1rem;color:#64748b">%</span></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#475569">vacuna</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TICKER ═══ -->
+<div class="relative overflow-hidden border-y py-3 z-10" style="border-color:rgba(229,62,62,.15);background:rgba(15,23,42,.6);backdrop-filter:blur(12px)">
+  <div class="ticker-inner whitespace-nowrap select-none">
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">CUADRIL ARGENTINO</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">36G PROTEÍNA / 100G</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">0% AZÚCAR AGREGADA</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">SIN CONSERVANTES</span>
+    <span class="inline-block px-5" style="color:#f59e0b">▸</span><span class="inline-block px-4" style="color:#475569">HECHO EN BUENOS AIRES</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">LOTE LIMITADO</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">100% CARNE VACUNA</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">CUADRIL ARGENTINO</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">36G PROTEÍNA / 100G</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">0% AZÚCAR AGREGADA</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">SIN CONSERVANTES</span>
+    <span class="inline-block px-5" style="color:#f59e0b">▸</span><span class="inline-block px-4" style="color:#475569">HECHO EN BUENOS AIRES</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">LOTE LIMITADO</span>
+    <span class="inline-block px-5" style="color:#e53e3e">▸</span><span class="inline-block px-4" style="color:#475569">100% CARNE VACUNA</span>
+  </div>
+</div>
+
+<!-- ═══ PRODUCTO ═══ -->
+<section id="producto" class="relative py-24 z-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="reveal mb-16">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-6 h-px" style="background:#e53e3e"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;color:#e53e3e">
+          <span data-lang="es">NUESTRO PRODUCTO</span><span data-lang="ru" class="hidden">НАШ ПРОДУКТ</span><span data-lang="en" class="hidden">OUR PRODUCT</span>
+        </span>
+      </div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.5rem);color:#f1f5f9;line-height:1.1">
+        <span data-lang="es">PicadaRica<br><span class="gradient-text">Bife Deshidratado</span></span>
+        <span data-lang="ru" class="hidden">PicadaRica<br><span class="gradient-text">Вяленый стейк</span></span>
+        <span data-lang="en" class="hidden">PicadaRica<br><span class="gradient-text">Dried Beef Steak</span></span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <!-- Carousel -->
+      <div class="hud-card lg:col-span-5 glass-strong rounded-2xl overflow-hidden relative" style="min-height:480px">
+        <div id="carousel" class="relative w-full" style="min-height:480px">
+          <div class="c-slide active"><img src="images/jerky-cone-1.jpg" alt="PicadaRica — cono de feria" class="w-full h-full object-cover" style="min-height:480px;object-position:center top;opacity:.85"></div>
+          <div class="c-slide"><img src="images/jerky-vacuum.jpg" alt="PicadaRica — empaque al vacío" class="w-full h-full object-cover" style="min-height:480px;object-position:center;opacity:.85"></div>
+          <div class="c-slide"><img src="images/jerky-cone-bull.jpg" alt="PicadaRica — cono bife de vacuno" class="w-full h-full object-cover" style="min-height:480px;object-position:center top;opacity:.85"></div>
+          <div class="c-slide"><img src="images/jerky-board.jpg" alt="PicadaRica — tabla artesanal" class="w-full h-full object-cover" style="min-height:480px;object-position:center;opacity:.85"></div>
+          <!-- Overlay gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-dark-900/60 via-transparent to-transparent pointer-events-none"></div>
+          <!-- Dots -->
+          <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+            <button onclick="cGo(0)" class="c-dot w-2 h-2 rounded-full transition-all" data-idx="0" style="background:#e53e3e"></button>
+            <button onclick="cGo(1)" class="c-dot w-2 h-2 rounded-full transition-all" data-idx="1" style="background:rgba(255,255,255,.2)"></button>
+            <button onclick="cGo(2)" class="c-dot w-2 h-2 rounded-full transition-all" data-idx="2" style="background:rgba(255,255,255,.2)"></button>
+            <button onclick="cGo(3)" class="c-dot w-2 h-2 rounded-full transition-all" data-idx="3" style="background:rgba(255,255,255,.2)"></button>
+          </div>
+          <button onclick="cPrev()" class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 glass rounded-lg flex items-center justify-center hover:border-brand-red transition-colors z-10">
+            <iconify-icon icon="solar:alt-arrow-left-bold" style="font-size:16px;color:#94a3b8"></iconify-icon>
+          </button>
+          <button onclick="cNext()" class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 glass rounded-lg flex items-center justify-center hover:border-brand-red transition-colors z-10">
+            <iconify-icon icon="solar:alt-arrow-right-bold" style="font-size:16px;color:#94a3b8"></iconify-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right cards -->
+      <div class="lg:col-span-7 grid grid-cols-2 gap-4">
+        <!-- Ingredients -->
+        <div class="hud-card col-span-2 glass-strong rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-2 h-2 rounded-full" style="background:#e53e3e"></div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#e53e3e;letter-spacing:.2em">
+              <span data-lang="es">INGREDIENTES</span><span data-lang="ru" class="hidden">СОСТАВ</span><span data-lang="en" class="hidden">INGREDIENTS</span>
+            </span>
+          </div>
+          <p class="text-dark-300 mb-4 text-sm leading-relaxed">
+            <span data-lang="es">Carne vacuna (cuadril), sal, especias naturales.</span>
+            <span data-lang="ru" class="hidden">Говядина (кадриль), соль, натуральные специи.</span>
+            <span data-lang="en" class="hidden">Beef (cuadril), salt, natural spices.</span>
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="glass px-3 py-1 rounded-lg text-xs" style="font-family:'JetBrains Mono',monospace;color:#fca5a5;border-color:rgba(229,62,62,.2)"><span data-lang="es">Sin soja</span><span data-lang="ru" class="hidden">Без сои</span><span data-lang="en" class="hidden">No soy</span></span>
+            <span class="glass px-3 py-1 rounded-lg text-xs" style="font-family:'JetBrains Mono',monospace;color:#fca5a5;border-color:rgba(229,62,62,.2)"><span data-lang="es">Sin glutamato</span><span data-lang="ru" class="hidden">Без глутамата</span><span data-lang="en" class="hidden">No glutamate</span></span>
+            <span class="glass px-3 py-1 rounded-lg text-xs" style="font-family:'JetBrains Mono',monospace;color:#fca5a5;border-color:rgba(229,62,62,.2)"><span data-lang="es">Sin conservantes</span><span data-lang="ru" class="hidden">Без консервантов</span><span data-lang="en" class="hidden">No preservatives</span></span>
+            <span class="glass px-3 py-1 rounded-lg text-xs" style="font-family:'JetBrains Mono',monospace;color:#fca5a5;border-color:rgba(229,62,62,.2)"><span data-lang="es">Sin aromatizantes</span><span data-lang="ru" class="hidden">Без ароматизаторов</span><span data-lang="en" class="hidden">No flavorings</span></span>
+          </div>
+        </div>
+
+        <!-- Nutrition -->
+        <div class="hud-card col-span-2 glass-strong rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-2 h-2 rounded-full" style="background:#f59e0b"></div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#f59e0b;letter-spacing:.2em">
+              <span data-lang="es">NUTRICIÓN / 100g</span><span data-lang="ru" class="hidden">КБЖУ / 100г</span><span data-lang="en" class="hidden">NUTRITION / 100g</span>
+            </span>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <span class="text-dark-400 w-28 text-xs" style="font-family:'JetBrains Mono',monospace"><span data-lang="es">Proteínas</span><span data-lang="ru" class="hidden">Белки</span><span data-lang="en" class="hidden">Protein</span></span>
+              <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,.07)"><div class="bar-fill h-full rounded-full" style="background:#e53e3e" data-width="92"></div></div>
+              <span class="text-dark-200 text-xs w-10 text-right" style="font-family:'JetBrains Mono',monospace">36g</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-dark-400 w-28 text-xs" style="font-family:'JetBrains Mono',monospace"><span data-lang="es">Grasas</span><span data-lang="ru" class="hidden">Жиры</span><span data-lang="en" class="hidden">Fats</span></span>
+              <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,.07)"><div class="bar-fill h-full rounded-full" style="background:#f59e0b" data-width="28"></div></div>
+              <span class="text-dark-200 text-xs w-10 text-right" style="font-family:'JetBrains Mono',monospace">8g</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-dark-400 w-28 text-xs" style="font-family:'JetBrains Mono',monospace"><span data-lang="es">Carbohidratos</span><span data-lang="ru" class="hidden">Углеводы</span><span data-lang="en" class="hidden">Carbs</span></span>
+              <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,.07)"><div class="bar-fill h-full rounded-full" style="background:#475569" data-width="18"></div></div>
+              <span class="text-dark-200 text-xs w-10 text-right" style="font-family:'JetBrains Mono',monospace">6g</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-dark-400 w-28 text-xs" style="font-family:'JetBrains Mono',monospace"><span data-lang="es">Azúcares</span><span data-lang="ru" class="hidden">Сахар</span><span data-lang="en" class="hidden">Sugars</span></span>
+              <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,.07)"><div class="bar-fill h-full rounded-full" style="background:#22c55e" data-width="1"></div></div>
+              <span class="text-xs w-10 text-right" style="font-family:'JetBrains Mono',monospace;color:#22c55e">0g ✓</span>
+            </div>
+            <div class="pt-2 border-t flex justify-between items-center" style="border-color:rgba(255,255,255,.06)">
+              <span class="text-dark-400 text-xs" style="font-family:'JetBrains Mono',monospace"><span data-lang="es">Valor energético</span><span data-lang="ru" class="hidden">Калории</span><span data-lang="en" class="hidden">Calories</span></span>
+              <span style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:1.2rem;color:#e53e3e">300<span style="font-size:.7rem;color:#475569;font-weight:400;margin-left:3px">kcal</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Format -->
+        <div class="hud-card glass-strong rounded-2xl p-5 reveal">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#475569;letter-spacing:.2em;margin-bottom:12px">FORMATO</div>
+          <div class="space-y-2.5">
+            <div class="flex justify-between items-center">
+              <span class="text-dark-200 text-sm" style="font-family:'JetBrains Mono',monospace">50g</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#f59e0b;font-weight:700">$8</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-dark-200 text-sm" style="font-family:'JetBrains Mono',monospace">250g</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#f59e0b;font-weight:700">$35</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-dark-200 text-sm" style="font-family:'JetBrains Mono',monospace">1kg</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#f59e0b;font-weight:700">$120</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Origin -->
+        <div class="hud-card glass-strong rounded-2xl p-5 reveal flex flex-col justify-center">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#475569;letter-spacing:.2em;margin-bottom:10px">
+            <span data-lang="es">ORIGEN</span><span data-lang="ru" class="hidden">ПРОИСХОЖДЕНИЕ</span><span data-lang="en" class="hidden">ORIGIN</span>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:1.8rem;line-height:1;background:linear-gradient(135deg,#e53e3e,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent">ARG</div>
+          <div class="text-dark-400 text-xs mt-1" style="font-family:'JetBrains Mono',monospace">Buenos Aires</div>
+          <div class="text-dark-500 text-xs mt-3" style="font-family:'JetBrains Mono',monospace">
+            <span data-lang="es">Artesanal · Lote limitado</span><span data-lang="ru" class="hidden">Ручная работа · Лимит.</span><span data-lang="en" class="hidden">Artisanal · Limited</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PARA QUIÉN ═══ -->
+<section id="para-quien" class="relative py-24 z-10" style="background:rgba(15,23,42,.3)">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="reveal mb-12">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-6 h-px" style="background:#e53e3e"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;color:#e53e3e">
+          <span data-lang="es">AUDIENCIAS</span><span data-lang="ru" class="hidden">АУДИТОРИИ</span><span data-lang="en" class="hidden">AUDIENCES</span>
+        </span>
+      </div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,3rem);color:#f1f5f9">
+        <span data-lang="es">¿Para quién es?</span><span data-lang="ru" class="hidden">Для кого это?</span><span data-lang="en" class="hidden">Who is it for?</span>
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+      <!-- Vida sana -->
+      <div class="hud-card glass rounded-xl overflow-hidden reveal pain-glow" style="border-color:rgba(255,255,255,.06)">
+        <button onclick="toggleAcc(this)" class="w-full flex items-center gap-4 p-6 text-left group">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all" style="background:rgba(229,62,62,.1);border:1px solid rgba(229,62,62,.2)">
+            <iconify-icon icon="solar:heart-pulse-bold" style="font-size:20px;color:#e53e3e"></iconify-icon>
+          </div>
+          <div class="flex-1">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem">
+              <span data-lang="es">Vida sana</span><span data-lang="ru" class="hidden">ЗОЖ</span><span data-lang="en" class="hidden">Health-conscious</span>
+            </div>
+            <div class="text-dark-400 text-xs mt-1" style="font-family:'JetBrains Mono',monospace">
+              <span data-lang="es">¿Cansado de snacks "proteicos" con azúcar escondido?</span>
+              <span data-lang="ru" class="hidden">Устали от «протеиновых» снеков со скрытым сахаром?</span>
+              <span data-lang="en" class="hidden">Tired of "protein" snacks with hidden sugar?</span>
+            </div>
+          </div>
+          <iconify-icon icon="solar:alt-arrow-down-bold" class="acc-icon flex-shrink-0 transition-transform" style="font-size:18px;color:#475569"></iconify-icon>
+        </button>
+        <div class="acc-body">
+          <div class="px-6 pb-6 border-t pt-4" style="border-color:rgba(255,255,255,.06)">
+            <div class="grid md:grid-cols-3 gap-3 mb-4">
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#e53e3e;letter-spacing:.2em;margin-bottom:8px"><span data-lang="es">DOLOR</span><span data-lang="ru" class="hidden">БОЛЬ</span><span data-lang="en" class="hidden">PAIN</span></div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">Los snacks "saludables" están llenos de azúcar, edulcorantes y químicos.</span><span data-lang="ru" class="hidden">«Здоровые» снеки полны сахара, подсластителей и химии.</span><span data-lang="en" class="hidden">"Healthy" snacks are full of sugar, sweeteners and chemicals.</span></p></div>
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#f59e0b;letter-spacing:.2em;margin-bottom:8px"><span data-lang="es">RESPUESTA</span><span data-lang="ru" class="hidden">ОТВЕТ</span><span data-lang="en" class="hidden">ANSWER</span></div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">PicadaRica = cuadril argentino. 36g proteína, 0% azúcar.</span><span data-lang="ru" class="hidden">PicadaRica = кадриль. 36г белка, 0% сахара.</span><span data-lang="en" class="hidden">PicadaRica = cuadril. 36g protein, 0% sugar.</span></p></div>
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#22c55e;letter-spacing:.2em;margin-bottom:8px"><span data-lang="es">BENEFICIO</span><span data-lang="ru" class="hidden">ВЫГОДА</span><span data-lang="en" class="hidden">BENEFIT</span></div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">Un snack sin culpa. Números reales, composición real.</span><span data-lang="ru" class="hidden">Перекус без вины. Реальные цифры.</span><span data-lang="en" class="hidden">A guilt-free snack. Real numbers.</span></p></div>
+            </div>
+            <a href="https://wa.me/541126466244" target="_blank" class="inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105" style="background:linear-gradient(135deg,#e53e3e,#c53030);font-family:'Space Grotesk',sans-serif">
+              <span data-lang="es">Pedir ahora</span><span data-lang="ru" class="hidden">Заказать</span><span data-lang="en" class="hidden">Order now</span>
+              <iconify-icon icon="solar:arrow-right-bold" style="font-size:14px"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deportistas -->
+      <div class="hud-card glass rounded-xl overflow-hidden reveal pain-glow" style="border-color:rgba(255,255,255,.06)">
+        <button onclick="toggleAcc(this)" class="w-full flex items-center gap-4 p-6 text-left group">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all" style="background:rgba(229,62,62,.1);border:1px solid rgba(229,62,62,.2)">
+            <iconify-icon icon="solar:dumbell-bold" style="font-size:20px;color:#e53e3e"></iconify-icon>
+          </div>
+          <div class="flex-1">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem">
+              <span data-lang="es">Deportistas</span><span data-lang="ru" class="hidden">Спортсмены</span><span data-lang="en" class="hidden">Athletes</span>
+            </div>
+            <div class="text-dark-400 text-xs mt-1" style="font-family:'JetBrains Mono',monospace">
+              <span data-lang="es">¿Tu shaker no entra en el bolsillo y los batoncitos tienen azúcar?</span>
+              <span data-lang="ru" class="hidden">Шейкер не лезет в карман, а батончики — сахар?</span>
+              <span data-lang="en" class="hidden">Your shaker doesn't fit in your pocket and bars have sugar?</span>
+            </div>
+          </div>
+          <iconify-icon icon="solar:alt-arrow-down-bold" class="acc-icon flex-shrink-0 transition-transform" style="font-size:18px;color:#475569"></iconify-icon>
+        </button>
+        <div class="acc-body">
+          <div class="px-6 pb-6 border-t pt-4" style="border-color:rgba(255,255,255,.06)">
+            <div class="grid md:grid-cols-3 gap-3 mb-4">
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#e53e3e;letter-spacing:.2em;margin-bottom:8px">DOLOR</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">El shaker es incómodo, los batoncitos tienen azúcar, nada rápido post-entreno.</span><span data-lang="ru" class="hidden">Шейкер неудобен, батончики с сахаром, после тренировки нечем закрыть белковое окно.</span><span data-lang="en" class="hidden">Shaker is inconvenient, bars have sugar, nothing quick after training.</span></p></div>
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#f59e0b;letter-spacing:.2em;margin-bottom:8px">RESPUESTA</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">36g de proteína animal lista para comer. Sin shaker, sin heladera.</span><span data-lang="ru" class="hidden">36г животного белка — готов к употреблению. Без шейкера, без холодильника.</span><span data-lang="en" class="hidden">36g animal protein ready to eat. No shaker, no fridge.</span></p></div>
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#22c55e;letter-spacing:.2em;margin-bottom:8px">BENEFICIO</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">Recuperación rápida. Proteína siempre a mano.</span><span data-lang="ru" class="hidden">Быстрое восстановление. Белок всегда под рукой.</span><span data-lang="en" class="hidden">Fast recovery. Protein always at hand.</span></p></div>
+            </div>
+            <a href="https://wa.me/541126466244" target="_blank" class="inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105" style="background:linear-gradient(135deg,#e53e3e,#c53030);font-family:'Space Grotesk',sans-serif">
+              <span data-lang="es">Pedir ahora</span><span data-lang="ru" class="hidden">Заказать</span><span data-lang="en" class="hidden">Order now</span>
+              <iconify-icon icon="solar:arrow-right-bold" style="font-size:14px"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profesionales -->
+      <div class="hud-card glass rounded-xl overflow-hidden reveal pain-glow" style="border-color:rgba(255,255,255,.06)">
+        <button onclick="toggleAcc(this)" class="w-full flex items-center gap-4 p-6 text-left group">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all" style="background:rgba(229,62,62,.1);border:1px solid rgba(229,62,62,.2)">
+            <iconify-icon icon="solar:case-minimalistic-bold" style="font-size:20px;color:#e53e3e"></iconify-icon>
+          </div>
+          <div class="flex-1">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem">
+              <span data-lang="es">Profesionales</span><span data-lang="ru" class="hidden">Предприниматели</span><span data-lang="en" class="hidden">Professionals</span>
+            </div>
+            <div class="text-dark-400 text-xs mt-1" style="font-family:'JetBrains Mono',monospace">
+              <span data-lang="es">¿Los picos de azúcar te dejan sin foco a media tarde?</span>
+              <span data-lang="ru" class="hidden">Сахарные качели убивают фокус к обеду?</span>
+              <span data-lang="en" class="hidden">Sugar crashes kill your focus by mid-afternoon?</span>
+            </div>
+          </div>
+          <iconify-icon icon="solar:alt-arrow-down-bold" class="acc-icon flex-shrink-0 transition-transform" style="font-size:18px;color:#475569"></iconify-icon>
+        </button>
+        <div class="acc-body">
+          <div class="px-6 pb-6 border-t pt-4" style="border-color:rgba(255,255,255,.06)">
+            <div class="grid md:grid-cols-3 gap-3 mb-4">
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#e53e3e;letter-spacing:.2em;margin-bottom:8px">DOLOR</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">Picos de azúcar, caídas de energía, snacks de máquina expendedora.</span><span data-lang="ru" class="hidden">Сахарные пики, провалы энергии, снеки из автомата.</span><span data-lang="en" class="hidden">Sugar spikes, energy crashes, vending machine snacks.</span></p></div>
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#f59e0b;letter-spacing:.2em;margin-bottom:8px">RESPUESTA</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">Proteína pura, energía estable. Presentación premium.</span><span data-lang="ru" class="hidden">Чистый белок, стабильная энергия. Премиальная подача.</span><span data-lang="en" class="hidden">Pure protein, stable energy. Premium presentation.</span></p></div>
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#22c55e;letter-spacing:.2em;margin-bottom:8px">BENEFICIO</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">Foco constante. Sin culpa, sin manchas, sin olor.</span><span data-lang="ru" class="hidden">Ровный фокус весь день. Без вины, без пятен.</span><span data-lang="en" class="hidden">Constant focus. No guilt, no stains, no smell.</span></p></div>
+            </div>
+            <a href="https://wa.me/541126466244" target="_blank" class="inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105" style="background:linear-gradient(135deg,#e53e3e,#c53030);font-family:'Space Grotesk',sans-serif">
+              <span data-lang="es">Pedir ahora</span><span data-lang="ru" class="hidden">Заказать</span><span data-lang="en" class="hidden">Order now</span>
+              <iconify-icon icon="solar:arrow-right-bold" style="font-size:14px"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- B2B -->
+      <div class="hud-card glass rounded-xl overflow-hidden reveal pain-glow" style="border-color:rgba(255,255,255,.06)">
+        <button onclick="toggleAcc(this)" class="w-full flex items-center gap-4 p-6 text-left group">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2)">
+            <iconify-icon icon="solar:shop-bold" style="font-size:20px;color:#f59e0b"></iconify-icon>
+          </div>
+          <div class="flex-1">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem">
+              <span data-lang="es">Mayoristas & B2B</span><span data-lang="ru" class="hidden">Опт & B2B</span><span data-lang="en" class="hidden">Wholesale & B2B</span>
+            </div>
+            <div class="text-dark-400 text-xs mt-1" style="font-family:'JetBrains Mono',monospace">
+              <span data-lang="es">¿Buscás un producto exclusivo con historia y buena margen?</span>
+              <span data-lang="ru" class="hidden">Ищете эксклюзивный продукт с историей и хорошей маржой?</span>
+              <span data-lang="en" class="hidden">Looking for an exclusive product with story and good margin?</span>
+            </div>
+          </div>
+          <iconify-icon icon="solar:alt-arrow-down-bold" class="acc-icon flex-shrink-0 transition-transform" style="font-size:18px;color:#475569"></iconify-icon>
+        </button>
+        <div class="acc-body">
+          <div class="px-6 pb-6 border-t pt-4" style="border-color:rgba(255,255,255,.06)">
+            <div class="grid md:grid-cols-3 gap-3 mb-4">
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#e53e3e;letter-spacing:.2em;margin-bottom:8px">DOLOR</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">El mercado está saturado de snacks genéricos.</span><span data-lang="ru" class="hidden">Рынок переполнен обычными снеками.</span><span data-lang="en" class="hidden">The market is saturated with generic snacks.</span></p></div>
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#f59e0b;letter-spacing:.2em;margin-bottom:8px">RESPUESTA</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">Partidas limitadas, pasaporte de calidad, private label.</span><span data-lang="ru" class="hidden">Ограниченные партии, паспорт качества, private label.</span><span data-lang="en" class="hidden">Limited batches, quality passport, private label.</span></p></div>
+              <div class="glass rounded-xl p-4"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#22c55e;letter-spacing:.2em;margin-bottom:8px">BENEFICIO</div><p class="text-dark-400 text-sm leading-relaxed"><span data-lang="es">Un producto que te diferencia de la competencia.</span><span data-lang="ru" class="hidden">Продукт, которым выделяетесь от конкурентов.</span><span data-lang="en" class="hidden">A product that makes you stand out.</span></p></div>
+            </div>
+            <a href="https://wa.me/541126466244" target="_blank" class="inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105" style="background:linear-gradient(135deg,#e53e3e,#c53030);font-family:'Space Grotesk',sans-serif">
+              <span data-lang="es">Consultar condiciones</span><span data-lang="ru" class="hidden">Узнать условия</span><span data-lang="en" class="hidden">Request terms</span>
+              <iconify-icon icon="solar:arrow-right-bold" style="font-size:14px"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESO ═══ -->
+<section id="proceso" class="relative py-24 z-10">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="reveal mb-16">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-6 h-px" style="background:#e53e3e"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;color:#e53e3e">
+          <span data-lang="es">DE BUENOS AIRES A TU MESA</span><span data-lang="ru" class="hidden">ОТ БУЭНОС-АЙРЕСА К СТОЛУ</span><span data-lang="en" class="hidden">FROM BUENOS AIRES TO YOUR TABLE</span>
+        </span>
+      </div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,3rem);color:#f1f5f9">
+        <span data-lang="es">Cómo lo hacemos</span><span data-lang="ru" class="hidden">Как мы это делаем</span><span data-lang="en" class="hidden">How we make it</span>
+      </h2>
+    </div>
+
+    <div class="space-y-4">
+      <!-- Step 01 -->
+      <div class="hud-card glass-strong rounded-xl p-6 reveal flex items-start gap-6 card-hover">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(229,62,62,.1);border:1px solid rgba(229,62,62,.25);box-shadow:0 0 20px rgba(229,62,62,.08)">
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:800;color:#e53e3e;font-size:1.2rem">01</span>
+        </div>
+        <div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem;margin-bottom:8px">
+            <span data-lang="es">Selección</span><span data-lang="ru" class="hidden">Выбор</span><span data-lang="en" class="hidden">Selection</span>
+          </h3>
+          <p class="text-dark-400 text-sm leading-relaxed">
+            <span data-lang="es">Elegimos cuadril de novillo argentino, corte magro con veteado natural.</span>
+            <span data-lang="ru" class="hidden">Выбираем кадриль аргентинского быка — постный рез с естественной мраморностью.</span>
+            <span data-lang="en" class="hidden">We select Argentine steer cuadril, lean cut with natural marbling.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 02 -->
+      <div class="hud-card glass-strong rounded-xl p-6 reveal flex items-start gap-6 card-hover">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);box-shadow:0 0 20px rgba(245,158,11,.06)">
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:800;color:#f59e0b;font-size:1.2rem">02</span>
+        </div>
+        <div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem;margin-bottom:8px">
+            <span data-lang="es">Marinado</span><span data-lang="ru" class="hidden">Маринование</span><span data-lang="en" class="hidden">Marinade</span>
+          </h3>
+          <p class="text-dark-400 text-sm leading-relaxed">
+            <span data-lang="es">Sal y especias naturales. Sin glutamato, sin azúcar, sin conservantes artificiales.</span>
+            <span data-lang="ru" class="hidden">Соль и натуральные специи. Без глутамата, без сахара, без искусственных консервантов.</span>
+            <span data-lang="en" class="hidden">Salt and natural spices. No glutamate, no sugar, no artificial preservatives.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 03 -->
+      <div class="hud-card glass-strong rounded-xl p-6 reveal flex items-start gap-6 card-hover">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(229,62,62,.1);border:1px solid rgba(229,62,62,.25);box-shadow:0 0 20px rgba(229,62,62,.08)">
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:800;color:#e53e3e;font-size:1.2rem">03</span>
+        </div>
+        <div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem;margin-bottom:8px">
+            <span data-lang="es">Deshidratado</span><span data-lang="ru" class="hidden">Дегидратация</span><span data-lang="en" class="hidden">Dehydration</span>
+          </h3>
+          <p class="text-dark-400 text-sm leading-relaxed">
+            <span data-lang="es">Proceso controlado a baja temperatura durante horas. Sin horno, sin fritura.</span>
+            <span data-lang="ru" class="hidden">Контролируемый процесс при низкой температуре в течение часов. Без духовки, без фритюра.</span>
+            <span data-lang="en" class="hidden">Controlled low-temperature process for hours. No oven, no frying.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 04 -->
+      <div class="hud-card glass-strong rounded-xl p-6 reveal flex items-start gap-6 card-hover">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);box-shadow:0 0 20px rgba(245,158,11,.06)">
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:800;color:#f59e0b;font-size:1.2rem">04</span>
+        </div>
+        <div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem;margin-bottom:8px">
+            <span data-lang="es">Control de calidad</span><span data-lang="ru" class="hidden">Контроль качества</span><span data-lang="en" class="hidden">Quality control</span>
+          </h3>
+          <p class="text-dark-400 text-sm leading-relaxed">
+            <span data-lang="es">Verificamos textura, sabor, humedad y peso de cada lote antes de envasar.</span>
+            <span data-lang="ru" class="hidden">Проверяем текстуру, вкус, влажность и вес каждой партии перед упаковкой.</span>
+            <span data-lang="en" class="hidden">We verify texture, flavor, moisture and weight of each batch before packaging.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 05 -->
+      <div class="hud-card glass-strong rounded-xl p-6 reveal flex items-start gap-6 card-hover">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(229,62,62,.1);border:1px solid rgba(229,62,62,.25);box-shadow:0 0 20px rgba(229,62,62,.08)">
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:800;color:#e53e3e;font-size:1.2rem">05</span>
+        </div>
+        <div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.05rem;margin-bottom:8px">
+            <span data-lang="es">Envasado y entrega</span><span data-lang="ru" class="hidden">Упаковка и доставка</span><span data-lang="en" class="hidden">Packaging & delivery</span>
+          </h3>
+          <p class="text-dark-400 text-sm leading-relaxed">
+            <span data-lang="es">Sellado al vacío con topper de cuero impreso. Entrega en CABA y GBA.</span>
+            <span data-lang="ru" class="hidden">Вакуумная упаковка с кожаным топпером. Доставка по CABA и GBA.</span>
+            <span data-lang="en" class="hidden">Vacuum sealed with printed leather topper. Delivery in CABA and GBA.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRECIOS ═══ -->
+<section id="precios" class="relative py-24 z-10" style="background:rgba(15,23,42,.3)">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="reveal mb-12 text-center">
+      <div class="flex items-center justify-center gap-3 mb-5">
+        <div class="w-6 h-px" style="background:#e53e3e"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;color:#e53e3e">
+          <span data-lang="es">PRECIOS</span><span data-lang="ru" class="hidden">ЦЕНЫ</span><span data-lang="en" class="hidden">PRICING</span>
+        </span>
+        <div class="w-6 h-px" style="background:#e53e3e"></div>
+      </div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,3rem);color:#f1f5f9">
+        <span data-lang="es">Elegí tu formato</span><span data-lang="ru" class="hidden">Выберите формат</span><span data-lang="en" class="hidden">Choose your format</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- 50g -->
+      <div class="hud-card glass-strong rounded-2xl p-6 reveal flex flex-col card-hover">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#475569;letter-spacing:.2em;margin-bottom:16px">FORMAT_50G</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:3rem;color:#f1f5f9;line-height:1;margin-bottom:4px">$8</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.1rem;margin-bottom:4px">50g</div>
+        <div class="text-dark-400 text-xs mb-6" style="font-family:'JetBrains Mono',monospace">
+          <span data-lang="es">Para probar</span><span data-lang="ru" class="hidden">Для пробы</span><span data-lang="en" class="hidden">To try</span>
+        </div>
+        <ul class="space-y-2 mb-6 flex-1">
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#e53e3e;font-size:10px">◆</span>18g proteína</li>
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#e53e3e;font-size:10px">◆</span><span data-lang="es">1 porción individual</span><span data-lang="ru" class="hidden">1 порция</span><span data-lang="en" class="hidden">1 serving</span></li>
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#e53e3e;font-size:10px">◆</span><span data-lang="es">Ideal para regalo</span><span data-lang="ru" class="hidden">Идеально в подарок</span><span data-lang="en" class="hidden">Great for gifting</span></li>
+        </ul>
+        <a href="https://wa.me/541126466244?text=Quiero%20el%20pack%2050g" target="_blank"
+           class="block w-full text-center glass hover:border-brand-red/40 text-dark-300 hover:text-white py-3 rounded-xl font-semibold text-sm transition-all"
+           style="font-family:'Space Grotesk',sans-serif">
+          <span data-lang="es">Pedir</span><span data-lang="ru" class="hidden">Заказать</span><span data-lang="en" class="hidden">Order</span>
+        </a>
+      </div>
+
+      <!-- 250g FEATURED -->
+      <div class="hud-card neon-sweep rounded-2xl p-6 reveal flex flex-col relative" style="margin-top:-8px;margin-bottom:-8px">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-white px-4 py-1 rounded-full text-xs font-bold" style="font-family:'JetBrains Mono',monospace;background:linear-gradient(135deg,#e53e3e,#f59e0b)">
+          <span data-lang="es">MEJOR VALOR</span><span data-lang="ru" class="hidden">ЛУЧШАЯ ЦЕНА</span><span data-lang="en" class="hidden">BEST VALUE</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#fca5a5;letter-spacing:.2em;margin-bottom:16px">FORMAT_250G</div>
+        <div class="gradient-text" style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:3rem;line-height:1;margin-bottom:4px">$35</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.1rem;margin-bottom:4px">250g</div>
+        <div class="text-dark-400 text-xs mb-6" style="font-family:'JetBrains Mono',monospace">
+          <span data-lang="es">El equilibrio perfecto</span><span data-lang="ru" class="hidden">Идеальный баланс</span><span data-lang="en" class="hidden">Perfect balance</span>
+        </div>
+        <ul class="space-y-2 mb-6 flex-1">
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#f59e0b;font-size:10px">◆</span>90g proteína</li>
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#f59e0b;font-size:10px">◆</span><span data-lang="es">5 porciones</span><span data-lang="ru" class="hidden">5 порций</span><span data-lang="en" class="hidden">5 servings</span></li>
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#f59e0b;font-size:10px">◆</span><span data-lang="es">$7 cada 50g</span><span data-lang="ru" class="hidden">$7 за 50г</span><span data-lang="en" class="hidden">$7 per 50g</span></li>
+        </ul>
+        <a href="https://wa.me/541126466244?text=Quiero%20el%20pack%20250g" target="_blank"
+           class="btn-shine block w-full text-center text-white py-3 rounded-xl font-bold text-sm transition-all hover:scale-105"
+           style="font-family:'Space Grotesk',sans-serif;background:linear-gradient(135deg,#e53e3e,#c53030)">
+          <span data-lang="es">Pedir ahora</span><span data-lang="ru" class="hidden">Заказать сейчас</span><span data-lang="en" class="hidden">Order now</span>
+        </a>
+      </div>
+
+      <!-- 1kg -->
+      <div class="hud-card glass-strong rounded-2xl p-6 reveal flex flex-col card-hover">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#475569;letter-spacing:.2em;margin-bottom:16px">FORMAT_1KG</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:3rem;color:#f1f5f9;line-height:1;margin-bottom:4px">$120</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9;font-size:1.1rem;margin-bottom:4px">1kg</div>
+        <div class="text-dark-400 text-xs mb-6" style="font-family:'JetBrains Mono',monospace">
+          <span data-lang="es">Para verdaderos fanáticos</span><span data-lang="ru" class="hidden">Для настоящих фанатов</span><span data-lang="en" class="hidden">For true fans</span>
+        </div>
+        <ul class="space-y-2 mb-6 flex-1">
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#e53e3e;font-size:10px">◆</span>360g proteína</li>
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#e53e3e;font-size:10px">◆</span><span data-lang="es">20 porciones</span><span data-lang="ru" class="hidden">20 порций</span><span data-lang="en" class="hidden">20 servings</span></li>
+          <li class="flex items-center gap-2 text-sm text-dark-400"><span style="color:#22c55e;font-size:10px">◆</span><span data-lang="es">Envío gratis</span><span data-lang="ru" class="hidden">Бесплатная доставка</span><span data-lang="en" class="hidden">Free shipping</span></li>
+        </ul>
+        <a href="https://wa.me/541126466244?text=Quiero%20el%20pack%201kg" target="_blank"
+           class="block w-full text-center glass hover:border-brand-red/40 text-dark-300 hover:text-white py-3 rounded-xl font-semibold text-sm transition-all"
+           style="font-family:'Space Grotesk',sans-serif">
+          <span data-lang="es">Pedir</span><span data-lang="ru" class="hidden">Заказать</span><span data-lang="en" class="hidden">Order</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GARANTÍA ═══ -->
+<section class="relative py-16 z-10 border-y" style="border-color:rgba(229,62,62,.12)">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+    <div class="hud-card glass-strong rounded-2xl p-10" style="border-color:rgba(229,62,62,.2)">
+      <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style="background:rgba(229,62,62,.1);border:1px solid rgba(229,62,62,.25)">
+        <iconify-icon icon="solar:shield-check-bold" style="font-size:30px;color:#e53e3e" class="i-pulse"></iconify-icon>
+      </div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.8rem;color:#f1f5f9;margin-bottom:12px">
+        <span data-lang="es">100% garantizado</span><span data-lang="ru" class="hidden">100% гарантия</span><span data-lang="en" class="hidden">100% guaranteed</span>
+      </h2>
+      <p class="text-dark-300 text-lg mb-2">
+        <span data-lang="es">Si no te gusta, lo cambiamos. Sin preguntas.</span>
+        <span data-lang="ru" class="hidden">Если не понравится — заменим. Без вопросов.</span>
+        <span data-lang="en" class="hidden">If you don't like it, we'll replace it. No questions.</span>
+      </p>
+      <p class="text-dark-400 text-sm">
+        <span data-lang="es">Probá PicadaRica sin riesgo. Si la textura, el sabor o la calidad no cumplen, escribinos y resolvemos.</span>
+        <span data-lang="ru" class="hidden">Попробуйте PicadaRica без риска. Если текстура, вкус или качество не оправдают ожиданий — напишите, решим.</span>
+        <span data-lang="en" class="hidden">Try PicadaRica risk-free. If texture, taste or quality don't meet expectations, write us and we'll fix it.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq" class="relative py-24 z-10" style="background:rgba(15,23,42,.3)">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="reveal mb-12">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-6 h-px" style="background:#e53e3e"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;color:#e53e3e">FAQ</span>
+      </div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,3rem);color:#f1f5f9">
+        <span data-lang="es">Preguntas frecuentes</span><span data-lang="ru" class="hidden">Частые вопросы</span><span data-lang="en" class="hidden">Frequently asked</span>
+      </h2>
+    </div>
+    <div class="space-y-3">
+      <div class="hud-card glass rounded-xl overflow-hidden reveal">
+        <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between gap-4 p-5 text-left">
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#f1f5f9"><span data-lang="es">¿Tiene conservantes?</span><span data-lang="ru" class="hidden">Есть консерванты?</span><span data-lang="en" class="hidden">Does it have preservatives?</span></span>
+          <iconify-icon icon="solar:alt-arrow-down-bold" class="acc-icon flex-shrink-0 transition-transform" style="font-size:18px;color:#475569"></iconify-icon>
+        </button>
+        <div class="acc-body"><p class="px-5 pb-5 text-dark-400 text-sm leading-relaxed"><span data-lang="es">No. PicadaRica se conserva por deshidratación natural, sin aditivos artificiales ni conservantes químicos.</span><span data-lang="ru" class="hidden">Нет. PicadaRica сохраняется за счёт естественной дегидратации, без искусственных добавок и химических консервантов.</span><span data-lang="en" class="hidden">No. PicadaRica is preserved through natural dehydration, without artificial additives or chemical preservatives.</span></p></div>
+      </div>
+      <div class="hud-card glass rounded-xl overflow-hidden reveal">
+        <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between gap-4 p-5 text-left">
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#f1f5f9"><span data-lang="es">¿Hacen envíos?</span><span data-lang="ru" class="hidden">Есть доставка?</span><span data-lang="en" class="hidden">Do you deliver?</span></span>
+          <iconify-icon icon="solar:alt-arrow-down-bold" class="acc-icon flex-shrink-0 transition-transform" style="font-size:18px;color:#475569"></iconify-icon>
+        </button>
+        <div class="acc-body"><p class="px-5 pb-5 text-dark-400 text-sm leading-relaxed"><span data-lang="es">Sí. Enviamos a CABA y GBA. Para pedidos de 1kg el envío es gratis. Coordinamos por WhatsApp.</span><span data-lang="ru" class="hidden">Да. Доставляем по CABA и GBA. При заказе 1кг — бесплатная доставка. Координируем через WhatsApp.</span><span data-lang="en" class="hidden">Yes. We deliver to CABA and GBA. Free shipping for 1kg orders. We coordinate via WhatsApp.</span></p></div>
+      </div>
+      <div class="hud-card glass rounded-xl overflow-hidden reveal">
+        <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between gap-4 p-5 text-left">
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#f1f5f9"><span data-lang="es">¿Cuánto dura?</span><span data-lang="ru" class="hidden">Сколько хранится?</span><span data-lang="en" class="hidden">How long does it last?</span></span>
+          <iconify-icon icon="solar:alt-arrow-down-bold" class="acc-icon flex-shrink-0 transition-transform" style="font-size:18px;color:#475569"></iconify-icon>
+        </button>
+        <div class="acc-body"><p class="px-5 pb-5 text-dark-400 text-sm leading-relaxed"><span data-lang="es">3 meses cerrado, en lugar fresco y seco. Una vez abierto, consumir en 7 días o refrigerar.</span><span data-lang="ru" class="hidden">3 месяца в закрытом виде, в сухом прохладном месте. После вскрытия — употребить в течение 7 дней или хранить в холодильнике.</span><span data-lang="en" class="hidden">3 months sealed, in a cool dry place. Once opened, consume within 7 days or refrigerate.</span></p></div>
+      </div>
+      <div class="hud-card glass rounded-xl overflow-hidden reveal">
+        <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between gap-4 p-5 text-left">
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#f1f5f9"><span data-lang="es">¿Hacen private label?</span><span data-lang="ru" class="hidden">Делаете private label?</span><span data-lang="en" class="hidden">Do you do private label?</span></span>
+          <iconify-icon icon="solar:alt-arrow-down-bold" class="acc-icon flex-shrink-0 transition-transform" style="font-size:18px;color:#475569"></iconify-icon>
+        </button>
+        <div class="acc-body"><p class="px-5 pb-5 text-dark-400 text-sm leading-relaxed"><span data-lang="es">Sí. Para pedidos B2B podemos personalizar el packaging con tu marca. Consultanos los mínimos.</span><span data-lang="ru" class="hidden">Да. Для B2B заказов можем персонализировать упаковку под вашу марку. Спросите о минимальных объёмах.</span><span data-lang="en" class="hidden">Yes. For B2B orders we can customize packaging with your brand. Ask us about minimums.</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA FINAL ═══ -->
+<section class="relative py-24 z-10 overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(229,62,62,.06) 0%,transparent 70%)"></div>
+  <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+    <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8">
+      <span class="sys-pulse"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#fca5a5;letter-spacing:.2em">
+        <span data-lang="es">Cada partida es limitada</span><span data-lang="ru" class="hidden">Каждая партия ограничена</span><span data-lang="en" class="hidden">Every batch is limited</span>
+      </span>
+    </div>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.5rem);color:#f1f5f9;line-height:1.1;margin-bottom:20px">
+      <span data-lang="es">Llevate el auténtico<br><span class="gradient-text">sabor argentino</span></span>
+      <span data-lang="ru" class="hidden">Заберите настоящий<br><span class="gradient-text">вкус Аргентины</span></span>
+      <span data-lang="en" class="hidden">Get the authentic<br><span class="gradient-text">Argentine taste</span></span>
+    </h2>
+    <p class="text-dark-400 mb-10 text-lg">
+      <span data-lang="es">Escribinos por WhatsApp, Instagram o Telegram. Respondemos en minutos.</span>
+      <span data-lang="ru" class="hidden">Пишите в WhatsApp, Instagram или Telegram. Отвечаем за минуты.</span>
+      <span data-lang="en" class="hidden">Write us on WhatsApp, Instagram or Telegram. We reply in minutes.</span>
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="https://wa.me/541126466244?text=Hola!%20Me%20interesa%20PicadaRica" target="_blank"
+         class="btn-shine group flex items-center gap-3 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 glow-red"
+         style="background:linear-gradient(135deg,#e53e3e,#c53030);font-family:'Space Grotesk',sans-serif">
+        <iconify-icon icon="solar:chat-round-line-bold" style="font-size:22px" class="i-beat"></iconify-icon>
+        WhatsApp
+        <iconify-icon icon="solar:arrow-right-bold" style="font-size:18px" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+      </a>
+      <a href="https://t.me/zakazPRica" target="_blank"
+         class="flex items-center gap-3 glass hover:border-brand-amber/40 text-dark-300 hover:text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+         style="font-family:'Space Grotesk',sans-serif">
+        <iconify-icon icon="solar:plain-bold" style="font-size:20px"></iconify-icon>
+        Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="relative z-10 border-t py-10" style="background:rgba(15,23,42,.5);border-color:rgba(255,255,255,.06);backdrop-filter:blur(12px)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#e53e3e,#c53030)">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:#fff">PR</span>
+      </div>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f1f5f9">PicadaRica</span>
+      <span class="text-dark-500 text-xs" style="font-family:'JetBrains Mono',monospace">Buenos Aires, AR · 2026</span>
+    </div>
+    <div class="flex items-center gap-5">
+      <a href="https://wa.me/541126466244" target="_blank" class="text-dark-400 hover:text-brand-red transition-colors">
+        <iconify-icon icon="solar:chat-round-line-bold" style="font-size:20px"></iconify-icon>
+      </a>
+      <a href="https://t.me/zakazPRica" target="_blank" class="text-dark-400 hover:text-brand-amber transition-colors">
+        <iconify-icon icon="solar:plain-bold" style="font-size:20px"></iconify-icon>
+      </a>
+      <span class="text-dark-500 text-xs" style="font-family:'JetBrains Mono',monospace">@picadarica</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── LANG ──
+var currentLang = 'es';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-lang]').forEach(function(el) {
+    el.classList.toggle('hidden', el.dataset.lang !== lang);
+  });
+  document.querySelectorAll('[data-lang-btn]').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.langBtn === lang);
+  });
+}
+
+// ── MOBILE MENU ──
+function openMob()  { document.getElementById('mob-menu').classList.add('open'); }
+function closeMob() { document.getElementById('mob-menu').classList.remove('open'); }
+
+// ── ACCORDION ──
+function toggleAcc(btn) {
+  var body = btn.nextElementSibling;
+  var icon = btn.querySelector('.acc-icon');
+  var isOpen = body.style.maxHeight && body.style.maxHeight !== '0px';
+  body.style.maxHeight = isOpen ? '0px' : body.scrollHeight + 'px';
+  if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+// ── CAROUSEL ──
+var cIdx = 0;
+function allSlides() { return document.querySelectorAll('.c-slide'); }
+function allDots()   { return document.querySelectorAll('.c-dot'); }
+function cGo(i) {
+  allSlides().forEach(function(s,j) { s.classList.toggle('active', j===i); });
+  allDots().forEach(function(d,j)   { d.style.background = j===i ? '#e53e3e' : 'rgba(255,255,255,.18)'; });
+  cIdx = i;
+}
+function cNext() { cGo((cIdx+1) % allSlides().length); }
+function cPrev() { cGo((cIdx-1+allSlides().length) % allSlides().length); }
+setInterval(cNext, 4000);
+
+// ── REVEAL + BARS ──
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.bar-fill').forEach(function(b) {
+        b.style.width = b.dataset.width + '%';
+      });
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal,.stagger').forEach(function(el) { io.observe(el); });
+
+// ── KINETIC HERO ──
+var words = document.querySelectorAll('.hero-word');
+words.forEach(function(w, i) { setTimeout(function() { w.classList.add('show'); }, i * 120); });
+</script>
+</body>
+</html>

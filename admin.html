@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PicadaRica — Админка</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="PR Admin">
+  <meta name="theme-color" content="#241210">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bordeaux: '#7B1C1C',
+            gold: '#C8A674',
+            cream: '#F5EAD3',
+            parchment: '#FBF4E4',
+            dark: '#241210',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .field-group { transition: all 0.2s; }
+    .field-group:hover { background: #f8f8f8; }
+    .tab-btn.active { background: #7B1C1C; color: #F5EAD3; }
+    .toggle-switch { position: relative; width: 44px; height: 24px; }
+    .toggle-switch input { display: none; }
+    .toggle-slider {
+      position: absolute; inset: 0; background: #ccc; border-radius: 24px;
+      cursor: pointer; transition: 0.3s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute; width: 18px; height: 18px;
+      left: 3px; bottom: 3px; background: white; border-radius: 50%;
+      transition: 0.3s;
+    }
+    .toggle-switch input:checked + .toggle-slider { background: #7B1C1C; }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+    .save-toast {
+      position: fixed; bottom: 24px; right: 24px; padding: 12px 24px;
+      border-radius: 12px; font-weight: 600;
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.3s ease; z-index: 100;
+    }
+    .save-toast.show { transform: translateY(0); opacity: 1; }
+    .save-toast.success { background: #10B981; color: white; }
+    .save-toast.error { background: #EF4444; color: white; }
+    .save-toast.info { background: #3B82F6; color: white; }
+    .sync-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; padding: 2px 8px; border-radius: 20px;
+    }
+    .sync-badge.cloud { background: #10B981; color: white; }
+    .sync-badge.local { background: #F59E0B; color: white; }
+    .sync-badge.loading { background: #6B7280; color: white; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { animation: spin 1s linear infinite; }
+    .photo-card { position: relative; }
+    .photo-preview {
+      width: 100%; aspect-ratio: 3/4; border-radius: 12px;
+      background: #f3f4f6; overflow: hidden; position: relative;
+      border: 2px dashed #d1d5db; cursor: pointer; transition: border-color 0.2s;
+    }
+    .photo-preview:hover { border-color: #7B1C1C; }
+    .photo-preview.has-image { border-style: solid; border-color: #e5e7eb; }
+    .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-preview .placeholder {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px; color: #9ca3af;
+    }
+    .photo-preview.has-image .placeholder { display: none; }
+    .upload-overlay {
+      position: absolute; inset: 0; background: rgba(123,28,28,0.85);
+      display: none; align-items: center; justify-content: center;
+      border-radius: 12px; color: white; font-weight: 600;
+    }
+    .photo-preview:hover .upload-overlay { display: flex; }
+    .photo-preview.has-image:hover .upload-overlay { display: flex; }
+    .upload-progress {
+      position: absolute; bottom: 0; left: 0; height: 3px;
+      background: #C8A674; border-radius: 0 0 12px 12px; transition: width 0.3s;
+    }
+    .fit-select {
+      padding: 4px 8px; border-radius: 6px; border: 1px solid #e5e7eb;
+      font-size: 12px; outline: none; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="min-h-screen flex items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm">
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 mx-auto mb-3 bg-bordeaux rounded-full flex items-center justify-center">
+          <svg viewBox="0 0 120 120" class="w-12 h-12"><circle cx="60" cy="60" r="55" fill="#7B1C1C"/><circle cx="60" cy="60" r="50" fill="none" stroke="#C8A674" stroke-width="1"/><rect x="15" y="48" width="90" height="24" rx="3" fill="#7B1C1C" stroke="#C8A674" stroke-width="0.8"/><text x="60" y="65" font-family="Georgia,serif" font-size="14" font-weight="900" fill="#F5EAD3" text-anchor="middle">PICADARICA</text></svg>
+        </div>
+        <h1 class="text-xl font-bold text-gray-900">Админка PicadaRica</h1>
+        <p class="text-gray-500 text-sm mt-1">Введите пароль для входа</p>
+      </div>
+      <input type="password" id="password-input" placeholder="Пароль"
+        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bordeaux focus:ring-2 focus:ring-bordeaux/20 outline-none mb-4"
+        onkeydown="if(event.key==='Enter')login()">
+      <button onclick="login()" class="w-full bg-bordeaux text-cream py-3 rounded-xl font-semibold hover:bg-dark transition-colors">
+        Войти
+      </button>
+      <p id="login-error" class="text-red-500 text-sm text-center mt-3 hidden">Неверный пароль</p>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="admin-panel" class="hidden">
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <a href="hub.html" class="text-gray-400 hover:text-bordeaux transition-colors" title="Назад к панели">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          </a>
+          <div class="w-8 h-8 bg-bordeaux rounded-full flex items-center justify-center">
+            <span class="text-cream text-xs font-bold">PR</span>
+          </div>
+          <span class="font-bold text-gray-900">Админка</span>
+          <span id="sync-status" class="sync-badge loading">
+            <svg class="w-3 h-3 spinner" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            загрузка
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="saveContent()" id="save-btn" class="px-4 py-2 rounded-lg bg-bordeaux text-cream text-sm font-semibold hover:bg-dark transition-colors flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+            Сохранить
+          </button>
+          <button onclick="exportContent()" class="px-3 py-2 rounded-lg border border-gray-200 text-sm font-medium hover:bg-gray-50 transition-colors" title="Скачать JSON">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- TABS -->
+    <div class="bg-white border-b border-gray-200">
+      <div class="max-w-6xl mx-auto px-4 flex gap-1 py-2 overflow-x-auto">
+        <button onclick="showTab('general')" class="tab-btn active px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors" data-tab="general">Общее</button>
+        <button onclick="showTab('hero')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors" data-tab="hero">Hero</button>
+        <button onclick="showTab('product')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors" data-tab="product">Продукт</button>
+        <button onclick="showTab('photos')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors" data-tab="photos">Фото</button>
+        <button onclick="showTab('pricing')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors" data-tab="pricing">Цены</button>
+        <button onclick="showTab('guarantee')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors" data-tab="guarantee">Гарантия</button>
+        <button onclick="showTab('contacts')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors" data-tab="contacts">Контакты</button>
+        <button onclick="showTab('sections')" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors" data-tab="sections">Блоки</button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+
+      <!-- TAB: General -->
+      <div id="tab-general" class="tab-content space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900">Общие настройки</h2>
+        <div class="bg-white rounded-xl border border-gray-200 divide-y">
+          <div class="field-group p-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Название бренда</label>
+            <input type="text" data-path="brand" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none">
+          </div>
+          <div class="field-group p-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Год (футер)</label>
+            <input type="text" data-path="year" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none">
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Hero -->
+      <div id="tab-hero" class="tab-content hidden space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900">Hero секция</h2>
+        <div class="bg-white rounded-xl border border-gray-200 divide-y" id="hero-fields"></div>
+      </div>
+
+      <!-- TAB: Product -->
+      <div id="tab-product" class="tab-content hidden space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900">Продукт</h2>
+
+        <div class="bg-white rounded-xl border border-gray-200 p-4 space-y-4">
+          <label class="block text-sm font-medium text-gray-700">Фото продукта (URL)</label>
+          <input type="text" data-path="product.image" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none">
+          <div id="product-image-preview" class="w-48 h-48 rounded-lg bg-gray-100 overflow-hidden">
+            <img id="product-img" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/7B1C1C/F5EAD3?text=No+Image'">
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 divide-y" id="product-fields"></div>
+
+        <h3 class="text-lg font-bold text-gray-900 mt-6">Пищевая ценность (на 100г)</h3>
+        <div class="bg-white rounded-xl border border-gray-200 divide-y">
+          <div class="field-group p-4 grid grid-cols-5 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Белок (г)</label>
+              <input type="number" data-path="product.nutrition.protein" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Жиры (г)</label>
+              <input type="number" data-path="product.nutrition.fat" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Углеводы (г)</label>
+              <input type="number" data-path="product.nutrition.carbs" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Сахар (г)</label>
+              <input type="number" data-path="product.nutrition.sugar" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Калории</label>
+              <input type="number" data-path="product.nutrition.calories" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Photos -->
+      <div id="tab-photos" class="tab-content hidden space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900">Фото карусели</h2>
+        <p class="text-gray-500 text-sm">Три слайда в секции «Продукт». Загрузите фото или вставьте URL.</p>
+        <div id="carousel-fields" class="space-y-6"></div>
+      </div>
+
+      <!-- TAB: Pricing -->
+      <div id="tab-pricing" class="tab-content hidden space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900">Цены</h2>
+        <div id="pricing-fields" class="space-y-4"></div>
+      </div>
+
+      <!-- TAB: Guarantee -->
+      <div id="tab-guarantee" class="tab-content hidden space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900">Гарантия</h2>
+        <div class="bg-white rounded-xl border border-gray-200 divide-y" id="guarantee-fields"></div>
+      </div>
+
+      <!-- TAB: Contacts -->
+      <div id="tab-contacts" class="tab-content hidden space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900">Контакты</h2>
+        <div class="bg-white rounded-xl border border-gray-200 divide-y">
+          <div class="field-group p-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp (только цифры, без +)</label>
+            <input type="text" data-path="whatsapp" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none" placeholder="541126466244">
+          </div>
+          <div class="field-group p-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Telegram</label>
+            <input type="text" data-path="telegram" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none" placeholder="@username">
+          </div>
+          <div class="field-group p-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Instagram</label>
+            <input type="text" data-path="instagram" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none" placeholder="@username">
+          </div>
+          <div class="field-group p-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Телефон (отображение)</label>
+            <input type="text" data-path="phone" class="content-field w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none" placeholder="+54 011 26466244">
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Sections -->
+      <div id="tab-sections" class="tab-content hidden space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900">Видимость блоков</h2>
+        <p class="text-gray-500 text-sm">Включай и выключай секции сайта</p>
+        <div class="bg-white rounded-xl border border-gray-200 divide-y" id="sections-toggles"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SAVE TOAST -->
+  <div id="save-toast" class="save-toast"></div>
+
+  <!-- PREVIEW MODAL -->
+  <div id="preview-modal" class="fixed inset-0 z-[200] bg-black/60 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl w-full max-w-5xl h-[85vh] flex flex-col">
+      <div class="flex items-center justify-between p-4 border-b">
+        <span class="font-bold text-gray-900">Превью сайта</span>
+        <button onclick="closePreview()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+      </div>
+      <iframe id="preview-frame" class="flex-1 w-full rounded-b-2xl"></iframe>
+    </div>
+  </div>
+
+  <script>
+    let content = {};
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzpZIBJg527dkLL4Y04VNYv4fbwa7WUA0-HMQo1l8Q51WS3fdgWCiu84cruOLBVIjWt3w/exec';
+    const STORAGE_KEY = 'picadarica_content';
+    let isCloudMode = false;
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function login() {
+      const pwd = document.getElementById('password-input').value;
+      if (pwd === 'picada2026') {
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('admin-panel').classList.remove('hidden');
+        loadContent();
+      } else {
+        document.getElementById('login-error').classList.remove('hidden');
+      }
+    }
+
+    function setSyncStatus(mode) {
+      const el = document.getElementById('sync-status');
+      if (mode === 'cloud') {
+        el.className = 'sync-badge cloud';
+        el.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg> облако';
+      } else if (mode === 'local') {
+        el.className = 'sync-badge local';
+        el.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> локально';
+      } else {
+        el.className = 'sync-badge loading';
+        el.innerHTML = '<svg class="w-3 h-3 spinner" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> загрузка';
+      }
+    }
+
+    function showToast(message, type) {
+      const toast = document.getElementById('save-toast');
+      toast.textContent = message;
+      toast.className = 'save-toast ' + type + ' show';
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    async function loadContent() {
+      setSyncStatus('loading');
+
+      // Try cloud first
+      try {
+        const resp = await fetch(API_URL + '?action=getContent');
+        const data = await resp.json();
+        if (data && Object.keys(data).length > 0 && data.brand) {
+          content = data;
+          isCloudMode = true;
+          setSyncStatus('cloud');
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
+          renderAllFields();
+          return;
+        }
+      } catch (e) {
+        console.log('Cloud load failed, falling back to local:', e);
+      }
+
+      // Fallback to localStorage
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          content = JSON.parse(saved);
+        } catch(e) {}
+      }
+
+      if (!content || !content.brand) {
+        try {
+          const resp = await fetch('content.json');
+          content = await resp.json();
+        } catch (e) {
+          content = {};
+        }
+      }
+
+      isCloudMode = false;
+      setSyncStatus('local');
+      renderAllFields();
+    }
+
+    function getPath(obj, path) {
+      return path.split('.').reduce((o, k) => o?.[k], obj);
+    }
+
+    function setPath(obj, path, value) {
+      const keys = path.split('.');
+      const last = keys.pop();
+      const target = keys.reduce((o, k) => {
+        if (!o[k]) o[k] = {};
+        return o[k];
+      }, obj);
+      if (value === '' || value === undefined) {
+        target[last] = value;
+      } else if (!isNaN(value) && value !== '') {
+        target[last] = Number(value);
+      } else {
+        target[last] = value;
+      }
+    }
+
+    function renderMultilangField(container, label, path) {
+      const langs = [
+        { code: 'es', flag: '🇦🇷', name: 'Español' },
+        { code: 'ru', flag: '🇷🇺', name: 'Русский' },
+        { code: 'en', flag: '🇬🇧', name: 'English' }
+      ];
+      const div = document.createElement('div');
+      div.className = 'field-group p-4';
+      div.innerHTML = `<label class="block text-sm font-semibold text-gray-700 mb-2">${label}</label>`;
+      const val = getPath(content, path);
+      langs.forEach(lang => {
+        const langVal = val?.[lang.code] || '';
+        const isLong = langVal.length > 80;
+        const fieldEl = isLong ? 'textarea' : 'input';
+        const extra = isLong ? 'rows="2"' : '';
+        div.innerHTML += `
+          <div class="flex items-start gap-2 mb-2">
+            <span class="text-sm mt-2 w-6">${lang.flag}</span>
+            <${fieldEl} ${extra} data-path="${path}.${lang.code}"
+              class="content-field flex-1 px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none text-sm"
+              ${fieldEl === 'input' ? `value="${langVal.replace(/"/g, '&quot;')}"` : ''}>${fieldEl === 'textarea' ? langVal : ''}</${fieldEl}>
+          </div>`;
+      });
+      container.appendChild(div);
+    }
+
+    function renderAllFields() {
+      document.querySelectorAll('.content-field').forEach(field => {
+        const path = field.dataset.path;
+        if (!path) return;
+        const val = getPath(content, path);
+        if (val !== undefined && val !== null) {
+          field.value = val;
+        }
+        field.addEventListener('input', () => {
+          setPath(content, path, field.value);
+          if (path === 'product.image') {
+            document.getElementById('product-img').src = field.value;
+          }
+        });
+      });
+
+      const imgEl = document.getElementById('product-img');
+      if (imgEl) imgEl.src = content.product?.image || '';
+
+      const heroContainer = document.getElementById('hero-fields');
+      heroContainer.innerHTML = '';
+      renderMultilangField(heroContainer, 'Бейдж (над заголовком)', 'hero.eyebrow');
+      renderMultilangField(heroContainer, 'Заголовок — строка 1', 'hero.title_line1');
+      renderMultilangField(heroContainer, 'Заголовок — строка 2 (курсив)', 'hero.title_line2');
+      renderMultilangField(heroContainer, 'Заголовок — строка 3', 'hero.title_line3');
+      renderMultilangField(heroContainer, 'Подзаголовок', 'hero.subtitle');
+      renderMultilangField(heroContainer, 'Кнопка CTA (основная)', 'hero.cta_primary');
+      renderMultilangField(heroContainer, 'Кнопка CTA (вторичная)', 'hero.cta_secondary');
+      bindDynamicFields(heroContainer);
+
+      const prodContainer = document.getElementById('product-fields');
+      prodContainer.innerHTML = '';
+      renderMultilangField(prodContainer, 'Состав / Ингредиенты', 'product.ingredients');
+      content.product?.badges?.forEach((b, i) => {
+        renderMultilangField(prodContainer, `Бейдж ${i + 1}`, `product.badges.${i}`);
+      });
+      bindDynamicFields(prodContainer);
+
+      const pricingContainer = document.getElementById('pricing-fields');
+      pricingContainer.innerHTML = '';
+      content.pricing?.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-xl border border-gray-200 p-4 space-y-3';
+        if (item.featured) card.className += ' ring-2 ring-gold';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-lg">${item.weight}${item.unit} ${item.featured ? '★ Хит' : ''}</h3>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-gray-500">Цена $</span>
+              <input type="number" data-path="pricing.${i}.price" value="${item.price}"
+                class="content-field w-24 px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none font-bold text-lg">
+            </div>
+          </div>`;
+        renderMultilangField(card, 'Подпись', `pricing.${i}.label`);
+        pricingContainer.appendChild(card);
+        bindDynamicFields(card);
+      });
+
+      const guarContainer = document.getElementById('guarantee-fields');
+      guarContainer.innerHTML = '';
+      renderMultilangField(guarContainer, 'Заголовок', 'guarantee.title');
+      renderMultilangField(guarContainer, 'Подзаголовок', 'guarantee.subtitle');
+      renderMultilangField(guarContainer, 'Описание', 'guarantee.description');
+      bindDynamicFields(guarContainer);
+
+      renderCarouselFields();
+
+      const sectContainer = document.getElementById('sections-toggles');
+      sectContainer.innerHTML = '';
+      const sectionLabels = {
+        hero: 'Hero (главный экран)',
+        producto: 'Продукт',
+        para_quien: 'Для кого',
+        proceso: 'Процесс',
+        precios: 'Цены',
+        garantia: 'Гарантия',
+        cta_final: 'Финальный CTA'
+      };
+      Object.entries(content.sections_visible || {}).forEach(([key, val]) => {
+        const div = document.createElement('div');
+        div.className = 'field-group p-4 flex items-center justify-between';
+        div.innerHTML = `
+          <span class="font-medium text-gray-700">${sectionLabels[key] || key}</span>
+          <label class="toggle-switch">
+            <input type="checkbox" ${val ? 'checked' : ''} onchange="content.sections_visible['${key}']=this.checked">
+            <span class="toggle-slider"></span>
+          </label>`;
+        sectContainer.appendChild(div);
+      });
+    }
+
+    function bindDynamicFields(container) {
+      container.querySelectorAll('.content-field:not([data-bound])').forEach(field => {
+        field.dataset.bound = '1';
+        const path = field.dataset.path;
+        if (!path) return;
+        const val = getPath(content, path);
+        if (val !== undefined && val !== null) {
+          field.value = val;
+        }
+        field.addEventListener('input', () => setPath(content, path, field.value));
+      });
+    }
+
+    function showTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+      document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+    }
+
+    async function saveContent() {
+      const btn = document.getElementById('save-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<svg class="w-4 h-4 spinner" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Сохранение...';
+
+      // Always save locally (with base64 images)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(content, null, 2));
+
+      // For cloud: strip base64 data URLs (too large for Google Sheets)
+      var cloudContent = JSON.parse(JSON.stringify(content));
+      if (cloudContent.carousel) {
+        cloudContent.carousel.forEach(function(slide) {
+          if (slide.url && slide.url.startsWith('data:')) {
+            slide.url = '';
+          }
+        });
+      }
+
+      // Try cloud save
+      try {
+        const resp = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ action: 'saveContent', content: cloudContent }),
+          mode: 'no-cors'
+        });
+        isCloudMode = true;
+        setSyncStatus('cloud');
+        showToast('Сохранено в облако', 'success');
+      } catch (e) {
+        console.log('Cloud save failed:', e);
+        setSyncStatus('local');
+        showToast('Сохранено локально (нет связи с облаком)', 'info');
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg> Сохранить';
+    }
+
+    function exportContent() {
+      const blob = new Blob([JSON.stringify(content, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'content.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function closePreview() {
+      document.getElementById('preview-modal').classList.add('hidden');
+      document.getElementById('preview-frame').src = '';
+    }
+
+    // === IMAGE UPLOAD & CAROUSEL ===
+    var defaultCarousel = [
+      { url: '', label: { es: 'Producto fresco', ru: 'Свежее мясо', en: 'Fresh product' }, fit: 'cover' },
+      { url: '', label: { es: 'Envasado al vacío', ru: 'Вакуумная упаковка', en: 'Vacuum sealed' }, fit: 'cover' },
+      { url: '', label: { es: 'Cono de feria', ru: 'Конус для ярмарки', en: 'Fair cone' }, fit: 'cover' }
+    ];
+
+    function compressImage(file, maxW, quality) {
+      return new Promise(function(resolve) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var img = new Image();
+          img.onload = function() {
+            var canvas = document.createElement('canvas');
+            var ratio = Math.min(maxW / img.width, maxW / img.height, 1);
+            canvas.width = img.width * ratio;
+            canvas.height = img.height * ratio;
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(function(blob) { resolve(blob); }, 'image/jpeg', quality);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadToTelegraph(blob) {
+      var fd = new FormData();
+      fd.append('file', blob, 'image.jpg');
+      var resp = await fetch('https://telegra.ph/upload', { method: 'POST', body: fd });
+      var data = await resp.json();
+      if (data && data[0] && data[0].src) return 'https://telegra.ph' + data[0].src;
+      throw new Error('Upload failed');
+    }
+
+    async function handleImageUpload(idx, file) {
+      var card = document.getElementById('photo-card-' + idx);
+      var preview = card.querySelector('.photo-preview img');
+      var urlInput = card.querySelector('.url-input');
+      var statusEl = card.querySelector('.upload-status');
+
+      statusEl.textContent = 'Сжатие...';
+      statusEl.style.display = 'block';
+
+      var compressed = await compressImage(file, 1200, 0.8);
+      preview.src = URL.createObjectURL(compressed);
+      card.querySelector('.photo-preview').classList.add('has-image');
+
+      statusEl.textContent = 'Загрузка...';
+      try {
+        var url = await uploadToTelegraph(compressed);
+        urlInput.value = url;
+        if (!content.carousel) content.carousel = JSON.parse(JSON.stringify(defaultCarousel));
+        content.carousel[idx].url = url;
+        statusEl.textContent = '✅ Загружено';
+        statusEl.style.color = '#10B981';
+        setTimeout(function() { statusEl.style.display = 'none'; statusEl.style.color = ''; }, 2000);
+      } catch(e) {
+        var dataUrl = await new Promise(function(r) {
+          var fr = new FileReader(); fr.onload = function() { r(fr.result); }; fr.readAsDataURL(compressed);
+        });
+        urlInput.value = dataUrl.substring(0, 50) + '... (локально)';
+        if (!content.carousel) content.carousel = JSON.parse(JSON.stringify(defaultCarousel));
+        content.carousel[idx].url = dataUrl;
+        statusEl.textContent = '⚠️ Сохранено локально';
+        statusEl.style.color = '#F59E0B';
+        setTimeout(function() { statusEl.style.display = 'none'; statusEl.style.color = ''; }, 3000);
+      }
+    }
+
+    function renderCarouselFields() {
+      if (!content.carousel) content.carousel = JSON.parse(JSON.stringify(defaultCarousel));
+      var container = document.getElementById('carousel-fields');
+      container.innerHTML = '';
+
+      var slideNames = ['Слайд 1', 'Слайд 2', 'Слайд 3'];
+
+      content.carousel.forEach(function(slide, i) {
+        var card = document.createElement('div');
+        card.className = 'photo-card bg-white rounded-xl border border-gray-200 p-4';
+        card.id = 'photo-card-' + i;
+
+        card.innerHTML =
+          '<div class="flex gap-4 flex-col sm:flex-row">' +
+            '<div class="sm:w-48 flex-shrink-0">' +
+              '<div class="photo-preview ' + (slide.url ? 'has-image' : '') + '" onclick="document.getElementById(\'file-input-' + i + '\').click()">' +
+                '<img src="' + (slide.url || '') + '" onerror="this.style.display=\'none\'">' +
+                '<div class="placeholder">' +
+                  '<svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>' +
+                  '<span class="text-sm">Нажми для загрузки</span>' +
+                '</div>' +
+                '<div class="upload-overlay">📷 Заменить</div>' +
+              '</div>' +
+              '<input type="file" id="file-input-' + i + '" accept="image/*" class="hidden" onchange="handleImageUpload(' + i + ', this.files[0])">' +
+              '<div class="upload-status text-xs text-center mt-1 font-medium" style="display:none"></div>' +
+            '</div>' +
+            '<div class="flex-1 space-y-3">' +
+              '<div class="flex items-center justify-between">' +
+                '<h3 class="font-bold text-gray-900">' + slideNames[i] + '</h3>' +
+                '<div class="flex items-center gap-2">' +
+                  '<span class="text-xs text-gray-500">Масштаб:</span>' +
+                  '<select class="fit-select" onchange="content.carousel[' + i + '].fit=this.value">' +
+                    '<option value="cover"' + (slide.fit === 'cover' ? ' selected' : '') + '>Заполнить (cover)</option>' +
+                    '<option value="contain"' + (slide.fit === 'contain' ? ' selected' : '') + '>Вписать (contain)</option>' +
+                  '</select>' +
+                '</div>' +
+              '</div>' +
+              '<div>' +
+                '<label class="block text-xs font-medium text-gray-500 mb-1">URL изображения</label>' +
+                '<input type="text" class="url-input w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-bordeaux outline-none text-sm" value="' + (slide.url && !slide.url.startsWith('data:') ? slide.url : '').replace(/"/g, '&quot;') + '" placeholder="https://..." oninput="updateCarouselUrl(' + i + ', this.value)">' +
+              '</div>' +
+              '<div class="space-y-2">' +
+                '<label class="block text-xs font-medium text-gray-500">Подпись (на сайте)</label>' +
+                '<div class="flex items-center gap-2"><span class="text-sm w-5">🇦🇷</span><input type="text" class="flex-1 px-3 py-1.5 rounded-lg border border-gray-200 focus:border-bordeaux outline-none text-sm" value="' + (slide.label?.es || '').replace(/"/g, '&quot;') + '" oninput="content.carousel[' + i + '].label.es=this.value"></div>' +
+                '<div class="flex items-center gap-2"><span class="text-sm w-5">🇷🇺</span><input type="text" class="flex-1 px-3 py-1.5 rounded-lg border border-gray-200 focus:border-bordeaux outline-none text-sm" value="' + (slide.label?.ru || '').replace(/"/g, '&quot;') + '" oninput="content.carousel[' + i + '].label.ru=this.value"></div>' +
+                '<div class="flex items-center gap-2"><span class="text-sm w-5">🇬🇧</span><input type="text" class="flex-1 px-3 py-1.5 rounded-lg border border-gray-200 focus:border-bordeaux outline-none text-sm" value="' + (slide.label?.en || '').replace(/"/g, '&quot;') + '" oninput="content.carousel[' + i + '].label.en=this.value"></div>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+
+        container.appendChild(card);
+      });
+    }
+
+    function updateCarouselUrl(idx, url) {
+      if (!content.carousel) content.carousel = JSON.parse(JSON.stringify(defaultCarousel));
+      content.carousel[idx].url = url;
+      var card = document.getElementById('photo-card-' + idx);
+      var img = card.querySelector('.photo-preview img');
+      var preview = card.querySelector('.photo-preview');
+      img.src = url;
+      img.style.display = '';
+      preview.classList.toggle('has-image', !!url);
+    }
+
+    document.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        saveContent();
+      }
+      if (e.key === 'Escape') closePreview();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+{
+  "brand": "PicadaRica",
+  "whatsapp": "541126466244",
+  "telegram": "@zakazPRica",
+  "instagram": "@picadarica",
+  "phone": "+54 011 26466244",
+  "year": "2026",
+
+  "hero": {
+    "eyebrow": {
+      "es": "Hecho en Buenos Aires, Argentina",
+      "ru": "Сделано в Буэнос-Айресе, Аргентина",
+      "en": "Made in Buenos Aires, Argentina"
+    },
+    "title_line1": {
+      "es": "El auténtico",
+      "ru": "Настоящий",
+      "en": "The authentic"
+    },
+    "title_line2": {
+      "es": "bife deshidratado",
+      "ru": "вяленый стейк",
+      "en": "dried beef steak"
+    },
+    "title_line3": {
+      "es": "de Argentina",
+      "ru": "из Аргентины",
+      "en": "from Argentina"
+    },
+    "subtitle": {
+      "es": "36 g de proteína · 0% azúcar · 100% carne vacuna. Sin soja, sin glutamato, sin conservantes. Solo cuadril argentino, sal y especias naturales.",
+      "ru": "36 г белка · 0% сахара · 100% говядина. Без сои, без глутамата, без консервантов. Только аргентинский кадриль, соль и натуральные специи.",
+      "en": "36g protein · 0% sugar · 100% beef. No soy, no glutamate, no preservatives. Only Argentine cuadril, salt and natural spices."
+    },
+    "cta_primary": {
+      "es": "Probá ahora",
+      "ru": "Попробуй сейчас",
+      "en": "Try now"
+    },
+    "cta_secondary": {
+      "es": "Conocé más",
+      "ru": "Узнать больше",
+      "en": "Learn more"
+    }
+  },
+
+  "stats": {
+    "protein": { "value": "36", "unit": "g" },
+    "sugar": { "value": "0", "unit": "%" },
+    "shelf": { "value": "3", "unit": "mes" },
+    "beef": { "value": "100", "unit": "%" }
+  },
+
+  "product": {
+    "image": "https://i.postimg.cc/YSvDNYws/Gemini-Generated-Image-2zu6kt2zu6kt2zu6.png",
+    "image_fallback": "https://placehold.co/600x800/7B1C1C/F5EAD3?text=PicadaRica",
+    "ingredients": {
+      "es": "Carne vacuna (cuadril), sal, especias naturales.",
+      "ru": "Говядина (кадриль), соль, натуральные специи.",
+      "en": "Beef (cuadril), salt, natural spices."
+    },
+    "badges": [
+      { "es": "Sin soja", "ru": "Без сои", "en": "No soy" },
+      { "es": "Sin glutamato", "ru": "Без глутамата", "en": "No glutamate" },
+      { "es": "Sin conservantes", "ru": "Без консервантов", "en": "No preservatives" },
+      { "es": "Sin aromatizantes", "ru": "Без ароматизаторов", "en": "No flavorings" }
+    ],
+    "nutrition": {
+      "protein": 36,
+      "fat": 8,
+      "carbs": 6,
+      "sugar": 0,
+      "calories": 300
+    }
+  },
+
+  "pricing": [
+    {
+      "id": "small",
+      "weight": "50",
+      "unit": "g",
+      "price": 8,
+      "featured": false,
+      "label": { "es": "Para probar", "ru": "Для пробы", "en": "To try" },
+      "features": [
+        { "text": "18g proteína" },
+        { "es": "1 porción individual", "ru": "1 порция", "en": "1 serving" },
+        { "es": "Ideal para regalo", "ru": "Идеально в подарок", "en": "Great for gifting" }
+      ]
+    },
+    {
+      "id": "medium",
+      "weight": "250",
+      "unit": "g",
+      "price": 35,
+      "featured": true,
+      "label": { "es": "El equilibrio perfecto", "ru": "Идеальный баланс", "en": "Perfect balance" },
+      "per_unit_price": 7,
+      "per_unit_label": { "es": "cada 50g", "ru": "за каждые 50г", "en": "per 50g" },
+      "features": [
+        { "text": "90g proteína" },
+        { "es": "5 porciones", "ru": "5 порций", "en": "5 servings" },
+        { "es": "Mejor precio por gramo", "ru": "Лучшая цена за грамм", "en": "Best price per gram" }
+      ]
+    },
+    {
+      "id": "large",
+      "weight": "1",
+      "unit": "kg",
+      "price": 120,
+      "featured": false,
+      "label": { "es": "Para verdaderos fanáticos", "ru": "Для настоящих фанатов", "en": "For true fans" },
+      "features": [
+        { "text": "360g proteína" },
+        { "es": "20 porciones", "ru": "20 порций", "en": "20 servings" },
+        { "es": "Envío gratis", "ru": "Бесплатная доставка", "en": "Free shipping" }
+      ]
+    }
+  ],
+
+  "guarantee": {
+    "title": {
+      "es": "100% garantizado",
+      "ru": "100% гарантия",
+      "en": "100% guaranteed"
+    },
+    "subtitle": {
+      "es": "Si no te gusta, lo cambiamos. Sin preguntas.",
+      "ru": "Если не понравится — заменим. Без вопросов.",
+      "en": "If you don't like it, we'll replace it. No questions."
+    },
+    "description": {
+      "es": "Probá PicadaRica sin riesgo. Si la textura, el sabor o la calidad no cumplen tus expectativas, escribinos y resolvemos.",
+      "ru": "Попробуйте PicadaRica без риска. Если текстура, вкус или качество не оправдают ожиданий — напишите, решим.",
+      "en": "Try PicadaRica risk-free. If texture, taste or quality don't meet your expectations, write us and we'll fix it."
+    }
+  },
+
+  "cta_final": {
+    "badge": {
+      "es": "Cada partida es limitada",
+      "ru": "Каждая партия ограничена",
+      "en": "Every batch is limited"
+    },
+    "title": {
+      "es": "Llevate el auténtico sabor argentino",
+      "ru": "Заберите настоящий вкус Аргентины",
+      "en": "Get the authentic Argentine taste"
+    },
+    "subtitle": {
+      "es": "Escribinos por WhatsApp, Instagram o Telegram. Respondemos en minutos.",
+      "ru": "Пишите в WhatsApp, Instagram или Telegram. Отвечаем за минуты.",
+      "en": "Write us on WhatsApp, Instagram or Telegram. We reply in minutes."
+    }
+  },
+
+  "sections_visible": {
+    "hero": true,
+    "producto": true,
+    "para_quien": true,
+    "proceso": true,
+    "precios": true,
+    "garantia": true,
+    "cta_final": true
+  }
+}
