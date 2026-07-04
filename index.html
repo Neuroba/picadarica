@@ -550,29 +550,6 @@
               <span class="carousel-label hidden" data-lang="ru">Свежее мясо</span>
               <span class="carousel-label hidden" data-lang="en">Fresh product</span>
             </div>
-            <div class="carousel-slide">
-              <img src="https://placehold.co/600x800/7B1C1C/F5EAD3?text=Vacío+%2B+Topper" alt="PicadaRica — Envasado al vacío" class="w-full h-full object-cover" loading="lazy">
-              <span class="carousel-label" data-lang="es">Envasado al vacío</span>
-              <span class="carousel-label hidden" data-lang="ru">Вакуумная упаковка</span>
-              <span class="carousel-label hidden" data-lang="en">Vacuum sealed</span>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://placehold.co/600x800/7B1C1C/F5EAD3?text=Cono+de+Feria" alt="PicadaRica — Cono de feria" class="w-full h-full object-cover" loading="lazy">
-              <span class="carousel-label" data-lang="es">Cono de feria</span>
-              <span class="carousel-label hidden" data-lang="ru">Конус для ярмарки</span>
-              <span class="carousel-label hidden" data-lang="en">Fair cone</span>
-            </div>
-            <button onclick="carouselPrev()" class="carousel-arrow left-3" aria-label="Previous">
-              <i data-lucide="chevron-left" class="w-5 h-5"></i>
-            </button>
-            <button onclick="carouselNext()" class="carousel-arrow right-3" aria-label="Next">
-              <i data-lucide="chevron-right" class="w-5 h-5"></i>
-            </button>
-            <div class="carousel-dots">
-              <button class="carousel-dot active" onclick="carouselGo(0)"></button>
-              <button class="carousel-dot" onclick="carouselGo(1)"></button>
-              <button class="carousel-dot" onclick="carouselGo(2)"></button>
-            </div>
           </div>
         </div>
 
@@ -1608,40 +1585,43 @@
       });
     }
 
-    // === PRODUCT CAROUSEL ===
+    // === PRODUCT CAROUSEL (активна только при 2+ слайдах) ===
     var carouselIdx = 0;
     var slides = document.querySelectorAll('#product-carousel .carousel-slide');
     var dots = document.querySelectorAll('#product-carousel .carousel-dot');
 
     function carouselGo(idx) {
+      if (slides.length < 2) return;
       slides[carouselIdx].classList.remove('active');
-      dots[carouselIdx].classList.remove('active');
+      if (dots[carouselIdx]) dots[carouselIdx].classList.remove('active');
       carouselIdx = (idx + slides.length) % slides.length;
       slides[carouselIdx].classList.add('active');
-      dots[carouselIdx].classList.add('active');
+      if (dots[carouselIdx]) dots[carouselIdx].classList.add('active');
     }
     function carouselNext() { carouselGo(carouselIdx + 1); }
     function carouselPrev() { carouselGo(carouselIdx - 1); }
 
-    var carouselTimer = setInterval(carouselNext, 4000);
-    document.getElementById('product-carousel').addEventListener('click', function() {
-      clearInterval(carouselTimer);
-      carouselTimer = setInterval(carouselNext, 6000);
-    });
+    if (slides.length > 1) {
+      var carouselTimer = setInterval(carouselNext, 4000);
+      document.getElementById('product-carousel').addEventListener('click', function() {
+        clearInterval(carouselTimer);
+        carouselTimer = setInterval(carouselNext, 6000);
+      });
 
-    (function() {
-      var el = document.getElementById('product-carousel');
-      var startX = 0;
-      el.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
-      el.addEventListener('touchend', function(e) {
-        var diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 40) {
-          clearInterval(carouselTimer);
-          carouselTimer = setInterval(carouselNext, 6000);
-          diff > 0 ? carouselNext() : carouselPrev();
-        }
-      }, { passive: true });
-    })();
+      (function() {
+        var el = document.getElementById('product-carousel');
+        var startX = 0;
+        el.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+        el.addEventListener('touchend', function(e) {
+          var diff = startX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) {
+            clearInterval(carouselTimer);
+            carouselTimer = setInterval(carouselNext, 6000);
+            diff > 0 ? carouselNext() : carouselPrev();
+          }
+        }, { passive: true });
+      })();
+    }
 
     // === CMS: LOAD CONTENT FROM CLOUD → localStorage → content.json ===
     (async function loadCMS() {

@@ -226,8 +226,8 @@
 
       <!-- TAB: Photos -->
       <div id="tab-photos" class="tab-content hidden space-y-6">
-        <h2 class="text-2xl font-bold text-gray-900">Фото карусели</h2>
-        <p class="text-gray-500 text-sm">Три слайда в секции «Продукт». Загрузите фото или вставьте URL.</p>
+        <h2 class="text-2xl font-bold text-gray-900">Фото продукта</h2>
+        <p class="text-gray-500 text-sm">Одна картинка джерков в секции «Продукт». Загрузите фото или вставьте URL.</p>
         <div id="carousel-fields" class="space-y-6"></div>
       </div>
 
@@ -587,9 +587,7 @@
 
     // === IMAGE UPLOAD & CAROUSEL ===
     var defaultCarousel = [
-      { url: '', label: { es: 'Producto fresco', ru: 'Свежее мясо', en: 'Fresh product' }, fit: 'cover' },
-      { url: '', label: { es: 'Envasado al vacío', ru: 'Вакуумная упаковка', en: 'Vacuum sealed' }, fit: 'cover' },
-      { url: '', label: { es: 'Cono de feria', ru: 'Конус для ярмарки', en: 'Fair cone' }, fit: 'cover' }
+      { url: '', label: { es: 'Producto fresco', ru: 'Свежее мясо', en: 'Fresh product' }, fit: 'cover' }
     ];
 
     function compressImage(file, maxW, quality) {
@@ -657,10 +655,12 @@
 
     function renderCarouselFields() {
       if (!content.carousel) content.carousel = JSON.parse(JSON.stringify(defaultCarousel));
+      // Одна картинка на сайте — держим только первый слайд, лишние убираем
+      if (content.carousel.length > 1) content.carousel = content.carousel.slice(0, 1);
       var container = document.getElementById('carousel-fields');
       container.innerHTML = '';
 
-      var slideNames = ['Слайд 1', 'Слайд 2', 'Слайд 3'];
+      var slideNames = ['Картинка продукта'];
 
       content.carousel.forEach(function(slide, i) {
         var card = document.createElement('div');
