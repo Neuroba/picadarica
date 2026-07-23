@@ -153,6 +153,13 @@
     .stamp-logo { width: 60px; height: 60px; position: relative; }
     .stamp-logo svg { width: 100%; height: 100%; }
 
+    /* FIX: capas decorativas SIEMPRE fuera de flujo. Con reduced-motion perdían
+       position:absolute (solo estaba dentro de @media no-preference) y se volvían
+       items flex, empujando el contenido del hero hacia la derecha. */
+    .floating-line, .drift-glow, .floating-diamond, .parallax-ornament {
+      position: absolute; pointer-events: none; z-index: 0;
+    }
+
     .mobile-menu {
       display: none;
       position: fixed;
@@ -310,6 +317,20 @@
         animation: none !important; opacity: 0.05 !important;
       }
     }
+
+    /* === Vacantes (sección Trabajá) === */
+    .vac-list li { position: relative; padding-left: 26px; }
+    .vac-list li::before { content: ''; position: absolute; left: 4px; top: 9px; width: 8px; height: 8px; background: #C8A674; transform: rotate(45deg); }
+    .vac-table th { background: #241210; color: #F5EAD3; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; padding: 10px 14px; text-align: left; }
+    .vac-table th.r, .vac-table td.r { text-align: right; }
+    .vac-table td { padding: 9px 14px; font-size: 14px; border-top: 1px solid rgba(58,36,24,0.1); }
+    .vac-table td.v { font-family: 'Playfair Display', serif; font-weight: 800; color: #B8893B; white-space: nowrap; }
+    .vac-table tr.hl td { background: rgba(200,166,116,0.22); color: #3A2418; font-weight: 600; }
+    .vac-table tr.hl td.v { color: #7B1C1C; }
+    .vac-label { display: block; font-size: 13px; font-weight: 600; color: #3A2418; margin-bottom: 6px; }
+    .vac-input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid rgba(58,36,24,0.18); background: #fff; color: #3A2418; font-size: 15px; font-family: 'Inter', sans-serif; }
+    .vac-input:focus { outline: none; border-color: #7B1C1C; box-shadow: 0 0 0 3px rgba(123,28,28,0.12); }
+    .vac-input::file-selector-button { border: none; background: #7B1C1C; color: #F5EAD3; padding: 6px 14px; border-radius: 8px; font-weight: 600; margin-right: 12px; cursor: pointer; }
   </style>
 </head>
 
@@ -358,9 +379,9 @@
           <a href="#faq" class="text-sm font-medium text-ink hover:text-bordeaux transition-colors" data-lang="es">FAQ</a>
           <a href="#faq" class="text-sm font-medium text-ink hover:text-bordeaux transition-colors hidden" data-lang="ru">FAQ</a>
           <a href="#faq" class="text-sm font-medium text-ink hover:text-bordeaux transition-colors hidden" data-lang="en">FAQ</a>
-          <a href="trabaja.html" class="text-sm font-semibold text-bordeaux hover:text-bordeaux-dark transition-colors" data-lang="es">Trabajá con nosotros</a>
-          <a href="trabaja.html" class="text-sm font-semibold text-bordeaux hover:text-bordeaux-dark transition-colors hidden" data-lang="ru">Работа у нас</a>
-          <a href="trabaja.html" class="text-sm font-semibold text-bordeaux hover:text-bordeaux-dark transition-colors hidden" data-lang="en">Work with us</a>
+          <a href="#trabaja" class="text-sm font-semibold text-bordeaux hover:text-bordeaux-dark transition-colors" data-lang="es">Trabajá con nosotros</a>
+          <a href="#trabaja" class="text-sm font-semibold text-bordeaux hover:text-bordeaux-dark transition-colors hidden" data-lang="ru">Работа у нас</a>
+          <a href="#trabaja" class="text-sm font-semibold text-bordeaux hover:text-bordeaux-dark transition-colors hidden" data-lang="en">Work with us</a>
         </nav>
         <div class="flex items-center gap-3">
           <div class="flex items-center bg-cream rounded-full p-1 border border-gold/30">
@@ -413,7 +434,7 @@
       <a href="#faq" class="menu-link" onclick="closeMobileMenu()">
         <i data-lucide="help-circle" class="w-6 h-6"></i> <span class="nav-text">FAQ</span>
       </a>
-      <a href="trabaja.html" class="menu-link" onclick="closeMobileMenu()">
+      <a href="#trabaja" class="menu-link" onclick="closeMobileMenu()">
         <i data-lucide="briefcase" class="w-6 h-6"></i> <span class="nav-text">Trabajá con nosotros</span>
       </a>
     </nav>
@@ -1338,6 +1359,324 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- === TRABAJÁ CON NOSOTROS (vacantes + formulario) === -->
+  <section id="trabaja" class="relative py-20 md:py-24 bg-parchment craft-texture">
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="reveal text-center mb-12">
+        <span class="inline-block text-gold-dark text-sm font-semibold tracking-widest uppercase mb-3" data-lang="es">Trabajá con nosotros</span>
+        <span class="inline-block text-gold-dark text-sm font-semibold tracking-widest uppercase mb-3 hidden" data-lang="ru">Работа у нас</span>
+        <span class="inline-block text-gold-dark text-sm font-semibold tracking-widest uppercase mb-3 hidden" data-lang="en">Work with us</span>
+        <h2 class="font-playfair text-3xl md:text-5xl font-black text-ink mb-4">
+          <span data-lang="es">Sumate al equipo</span>
+          <span data-lang="ru" class="hidden">Присоединяйся к команде</span>
+          <span data-lang="en" class="hidden">Join the team</span>
+        </h2>
+        <p class="text-ink/70 text-base max-w-xl mx-auto">
+          <span data-lang="es">Dos formas de ganar con un producto premium que ya se vende. Sin poner plata, cobrás el mismo día. Tocá cada una para ver los números.</span>
+          <span data-lang="ru" class="hidden">Два способа заработать на премиум-продукте, который уже продаётся. Без вложений, платят в тот же день. Нажми, чтобы раскрыть цифры.</span>
+          <span data-lang="en" class="hidden">Two ways to earn with a premium product that already sells. No money down, paid the same day. Tap each one to see the numbers.</span>
+        </p>
+      </div>
+
+      <div class="space-y-5">
+
+        <!-- ===== VENDEDOR ===== -->
+        <div class="reveal accordion-card bg-cream border border-gold/30 rounded-2xl overflow-hidden shadow-sm">
+          <button onclick="toggleAccordion(this)" class="w-full flex items-center gap-4 p-5 md:p-6 text-left hover:bg-gold/5 transition-colors">
+            <div class="w-12 h-12 bg-bordeaux rounded-full flex items-center justify-center flex-shrink-0"><i data-lucide="user" class="w-6 h-6 text-cream"></i></div>
+            <div class="flex-1">
+              <h3 class="font-playfair text-xl md:text-2xl font-bold text-ink leading-tight">
+                <span data-lang="es">Vendedor/a de calle</span>
+                <span data-lang="ru" class="hidden">Уличный продавец</span>
+                <span data-lang="en" class="hidden">Street seller</span>
+              </h3>
+              <p class="text-ink/60 text-sm mt-0.5">
+                <span data-lang="es">Ganás en la calle, cobrás el mismo día · hasta <b class="text-bordeaux">~$1.600/mes</b></span>
+                <span data-lang="ru" class="hidden">Зарабатываешь на улице, платят в тот же день · до <b class="text-bordeaux">~$1.600/мес</b></span>
+                <span data-lang="en" class="hidden">Earn on the street, paid same day · up to <b class="text-bordeaux">~$1,600/mo</b></span>
+              </p>
+            </div>
+            <i data-lucide="chevron-down" class="w-6 h-6 text-gold-dark accordion-icon transition-transform flex-shrink-0"></i>
+          </button>
+          <div class="accordion-content px-5 md:px-6 pb-6">
+            <div class="border-t border-gold/25 pt-5 space-y-6">
+
+              <div>
+                <h4 class="font-inter font-bold text-bordeaux text-sm uppercase tracking-wide mb-2"><span data-lang="es">¿Qué hacés?</span><span data-lang="ru" class="hidden">Что делаешь?</span><span data-lang="en" class="hidden">What do you do?</span></h4>
+                <p class="text-ink/80 text-[15px] leading-relaxed" data-lang="es">Vendés nuestro charqui premium — el <b>cono de 25 g</b> — en tu punto fijo. Das a probar una muestra, decís una frase y cerrás la venta. La muestra hace la mitad del trabajo.</p>
+                <p class="text-ink/80 text-[15px] leading-relaxed hidden" data-lang="ru">Продаёшь наш премиум-джерки — <b>коно 25 г</b> — на своей закреплённой точке. Даёшь попробовать, говоришь одну фразу и закрываешь продажу. Проба делает половину работы.</p>
+                <p class="text-ink/80 text-[15px] leading-relaxed hidden" data-lang="en">You sell our premium jerky — the <b>25 g cone</b> — at your fixed spot. You give a sample, say one line, and close the sale. The sample does half the work.</p>
+              </div>
+
+              <div>
+                <h4 class="font-inter font-bold text-bordeaux text-sm uppercase tracking-wide mb-3"><span data-lang="es">¿Cuánto ganás?</span><span data-lang="ru" class="hidden">Сколько зарабатываешь?</span><span data-lang="en" class="hidden">How much do you earn?</span></h4>
+                <div class="rounded-xl overflow-hidden border border-ink/10">
+                  <table class="w-full border-collapse vac-table">
+                    <thead><tr>
+                      <th><span data-lang="es">Tu mes</span><span data-lang="ru" class="hidden">Твой месяц</span><span data-lang="en" class="hidden">Your month</span></th>
+                      <th class="r"><span data-lang="es">Cobrás</span><span data-lang="ru" class="hidden">Получаешь</span><span data-lang="en" class="hidden">You earn</span></th>
+                    </tr></thead>
+                    <tbody>
+                      <tr><td><span data-lang="es">Primer mes <span class="text-ink/50">aprendés</span></span><span data-lang="ru" class="hidden">Первый месяц <span class="text-ink/50">учишься</span></span><span data-lang="en" class="hidden">First month <span class="text-ink/50">learning</span></span></td><td class="v r">~$750</td></tr>
+                      <tr class="hl"><td><span data-lang="es">Buen mes <span class="text-ink/50">meta 40/día</span></span><span data-lang="ru" class="hidden">Хороший месяц <span class="text-ink/50">план 40/день</span></span><span data-lang="en" class="hidden">Good month <span class="text-ink/50">goal 40/day</span></span></td><td class="v r">~$1.600</td></tr>
+                      <tr><td><span data-lang="es">Mes fuerte <span class="text-ink/50">60/día</span></span><span data-lang="ru" class="hidden">Сильный месяц <span class="text-ink/50">60/день</span></span><span data-lang="en" class="hidden">Strong month <span class="text-ink/50">60/day</span></span></td><td class="v r">~$2.400</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="text-ink/60 text-[13px] mt-2" data-lang="es">Sin meta cobrás <b>$1,20 por cono</b>; al llegar a la meta de 40, cada cono te paga <b>$1,60</b>. En mano, el mismo día.</p>
+                <p class="text-ink/60 text-[13px] mt-2 hidden" data-lang="ru">Без плана — <b>$1,20 за коно</b>; при выполнении плана 40 каждое коно даёт <b>$1,60</b>. В руки, в тот же день.</p>
+                <p class="text-ink/60 text-[13px] mt-2 hidden" data-lang="en">Below goal you earn <b>$1.20 per cone</b>; at the goal of 40, each cone pays <b>$1.60</b>. In hand, same day.</p>
+              </div>
+
+              <div>
+                <h4 class="font-inter font-bold text-bordeaux text-sm uppercase tracking-wide mb-2"><span data-lang="es">¿Qué te damos?</span><span data-lang="ru" class="hidden">Что даём?</span><span data-lang="en" class="hidden">What we give you</span></h4>
+                <ul class="vac-list space-y-1.5 text-ink/80 text-[15px]" data-lang="es">
+                  <li>Producto <b>en consignación</b> — no comprás nada, no ponés plata.</li>
+                  <li>Muestras, bolso térmico, uniforme y credencial.</li>
+                  <li>Tu <b>zona fija</b> — no peleás el lugar con nadie.</li>
+                  <li>Guion de ventas y capacitación. Sin experiencia previa.</li>
+                </ul>
+                <ul class="vac-list space-y-1.5 text-ink/80 text-[15px] hidden" data-lang="ru">
+                  <li>Товар <b>под реализацию</b> — ничего не покупаешь, не вкладываешь.</li>
+                  <li>Пробники, термо-сумка, форма и бейдж.</li>
+                  <li>Твоя <b>закреплённая зона</b> — не дерёшься за место.</li>
+                  <li>Скрипт продаж и обучение. Опыт не нужен.</li>
+                </ul>
+                <ul class="vac-list space-y-1.5 text-ink/80 text-[15px] hidden" data-lang="en">
+                  <li>Product <b>on consignment</b> — you buy nothing, invest nothing.</li>
+                  <li>Samples, thermal bag, uniform and badge.</li>
+                  <li>Your <b>fixed zone</b> — no fighting over the spot.</li>
+                  <li>Sales script and training. No experience needed.</li>
+                </ul>
+              </div>
+
+              <div class="bg-parchment border border-gold/25 rounded-xl p-4">
+                <p class="text-ink/80 text-sm leading-relaxed" data-lang="es"><b class="text-bordeaux">Sin trampa:</b> probás un día sin compromiso. No es pirámide — cobrás por producto real vendido. No arriesgás plata: si un día vendés poco, ganás poco, pero nunca quedás debiendo.</p>
+                <p class="text-ink/80 text-sm leading-relaxed hidden" data-lang="ru"><b class="text-bordeaux">Без подвоха:</b> пробуешь один день без обязательств. Это не пирамида — платят за реально проданный продукт. Не рискуешь деньгами: продал мало — заработал мало, но должен не останешься.</p>
+                <p class="text-ink/80 text-sm leading-relaxed hidden" data-lang="en"><b class="text-bordeaux">No catch:</b> try a day with no commitment. Not a pyramid — you're paid for real product sold. No money at risk: a slow day means less pay, but you never end up owing.</p>
+              </div>
+
+              <a href="https://wa.me/541126466244?text=QUIERO" target="_blank" class="btn-shine flex items-center justify-center gap-3 bg-bordeaux text-cream px-6 py-4 rounded-full font-bold text-lg hover:bg-bordeaux-dark transition-all">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                <span data-lang="es">Escribí "QUIERO" por WhatsApp</span>
+                <span data-lang="ru" class="hidden">Напиши "QUIERO" в WhatsApp</span>
+                <span data-lang="en" class="hidden">Write "QUIERO" on WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== COORDINADOR ===== -->
+        <div class="reveal accordion-card bg-cream border border-gold/30 rounded-2xl overflow-hidden shadow-sm">
+          <button onclick="toggleAccordion(this)" class="w-full flex items-center gap-4 p-5 md:p-6 text-left hover:bg-gold/5 transition-colors">
+            <div class="w-12 h-12 bg-bordeaux rounded-full flex items-center justify-center flex-shrink-0"><i data-lucide="users" class="w-6 h-6 text-cream"></i></div>
+            <div class="flex-1">
+              <h3 class="font-playfair text-xl md:text-2xl font-bold text-ink leading-tight">
+                <span data-lang="es">Coordinador/a de distribución</span>
+                <span data-lang="ru" class="hidden">Менеджер-управляющий</span>
+                <span data-lang="en" class="hidden">Distribution coordinator</span>
+              </h3>
+              <p class="text-ink/60 text-sm mt-0.5">
+                <span data-lang="es">Armás tu equipo y ganás con cada venta · en meta <b class="text-bordeaux">~$2.500/mes</b></span>
+                <span data-lang="ru" class="hidden">Строишь команду и зарабатываешь с каждой продажи · на плане <b class="text-bordeaux">~$2.500/мес</b></span>
+                <span data-lang="en" class="hidden">Build your team, earn on every sale · at goal <b class="text-bordeaux">~$2,500/mo</b></span>
+              </p>
+            </div>
+            <i data-lucide="chevron-down" class="w-6 h-6 text-gold-dark accordion-icon transition-transform flex-shrink-0"></i>
+          </button>
+          <div class="accordion-content px-5 md:px-6 pb-6">
+            <div class="border-t border-gold/25 pt-5 space-y-6">
+
+              <div>
+                <h4 class="font-inter font-bold text-bordeaux text-sm uppercase tracking-wide mb-2"><span data-lang="es">¿Qué hacés?</span><span data-lang="ru" class="hidden">Что делаешь?</span><span data-lang="en" class="hidden">What do you do?</span></h4>
+                <p class="text-ink/80 text-[15px] leading-relaxed" data-lang="es">Armás y dirigís un <b>equipo de vendedores</b>. Reclutás (con candidatos que te pasamos), capacitás, entregás producto, cobrás y controlás que las cuentas cierren. Dirigís — no vendés vos (salvo al arrancar).</p>
+                <p class="text-ink/80 text-[15px] leading-relaxed hidden" data-lang="ru">Строишь и ведёшь <b>команду продавцов</b>. Набираешь (кандидатов даём мы), обучаешь, выдаёшь товар, собираешь деньги и следишь, чтобы всё сходилось. Ты руководишь — сам не продаёшь (кроме старта).</p>
+                <p class="text-ink/80 text-[15px] leading-relaxed hidden" data-lang="en">You build and lead a <b>team of sellers</b>. You recruit (with candidates we send), train, hand out product, collect the money and keep the books balanced. You lead — you don't sell yourself (except at the start).</p>
+              </div>
+
+              <div>
+                <h4 class="font-inter font-bold text-bordeaux text-sm uppercase tracking-wide mb-3"><span data-lang="es">¿Cuánto ganás?</span><span data-lang="ru" class="hidden">Сколько зарабатываешь?</span><span data-lang="en" class="hidden">How much do you earn?</span></h4>
+                <div class="rounded-xl overflow-hidden border border-ink/10">
+                  <table class="w-full border-collapse vac-table">
+                    <thead><tr>
+                      <th><span data-lang="es">Tu equipo</span><span data-lang="ru" class="hidden">Твоя команда</span><span data-lang="en" class="hidden">Your team</span></th>
+                      <th class="r"><span data-lang="es">Por mes</span><span data-lang="ru" class="hidden">В месяц</span><span data-lang="en" class="hidden">Per month</span></th>
+                    </tr></thead>
+                    <tbody>
+                      <tr><td><span data-lang="es">Equipo flojo <span class="text-ink/50">~30/día</span></span><span data-lang="ru" class="hidden">Слабая команда <span class="text-ink/50">~30/день</span></span><span data-lang="en" class="hidden">Weak team <span class="text-ink/50">~30/day</span></span></td><td class="v r">~$1.125</td></tr>
+                      <tr class="hl"><td><span data-lang="es">Equipo en meta <span class="text-ink/50">5 × 40/día</span></span><span data-lang="ru" class="hidden">Команда на плане <span class="text-ink/50">5 × 40/день</span></span><span data-lang="en" class="hidden">Team at goal <span class="text-ink/50">5 × 40/day</span></span></td><td class="v r">~$2.500</td></tr>
+                      <tr><td><span data-lang="es">Equipo fuerte <span class="text-ink/50">60/día</span></span><span data-lang="ru" class="hidden">Сильная команда <span class="text-ink/50">60/день</span></span><span data-lang="en" class="hidden">Strong team <span class="text-ink/50">60/day</span></span></td><td class="v r">~$3.750</td></tr>
+                      <tr><td><span data-lang="es">Dos equipos <span class="text-ink/50">10 vendedores</span></span><span data-lang="ru" class="hidden">Две команды <span class="text-ink/50">10 продавцов</span></span><span data-lang="en" class="hidden">Two teams <span class="text-ink/50">10 sellers</span></span></td><td class="v r">~$5.000+</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="text-ink/60 text-[13px] mt-2" data-lang="es">Cobrás <b>$0,50 por cada cono</b> que vende tu equipo. El mes 1, mientras armás el equipo, rendís ~$1.000–1.500 (en parte con tus ventas). En meta, mes 2–3: ~$2.500.</p>
+                <p class="text-ink/60 text-[13px] mt-2 hidden" data-lang="ru">Получаешь <b>$0,50 с каждого коно</b>, что продаёт команда. Месяц 1, пока собираешь команду, — ~$1.000–1.500 (частично со своих продаж). На плане, месяц 2–3: ~$2.500.</p>
+                <p class="text-ink/60 text-[13px] mt-2 hidden" data-lang="en">You earn <b>$0.50 per cone</b> your team sells. Month 1, while building the team, you make ~$1,000–1,500 (partly from your own sales). At goal, month 2–3: ~$2,500.</p>
+              </div>
+
+              <div>
+                <h4 class="font-inter font-bold text-bordeaux text-sm uppercase tracking-wide mb-2"><span data-lang="es">¿Qué te damos?</span><span data-lang="ru" class="hidden">Что даём?</span><span data-lang="en" class="hidden">What we give you</span></h4>
+                <ul class="vac-list space-y-1.5 text-ink/80 text-[15px]" data-lang="es">
+                  <li>Producto <b>en consignación</b> — sin invertir capital.</li>
+                  <li><b>Flujo de candidatos</b> — el reclutamiento lo hacemos nosotros.</li>
+                  <li>Planilla de control que cuadra sola: <i>entregado = vendido + devuelto + faltante</i>.</li>
+                  <li>Capacitación, marca y materiales.</li>
+                </ul>
+                <ul class="vac-list space-y-1.5 text-ink/80 text-[15px] hidden" data-lang="ru">
+                  <li>Товар <b>под реализацию</b> — без вложений капитала.</li>
+                  <li><b>Поток кандидатов</b> — набор берём на себя.</li>
+                  <li>Таблица учёта, что сходится сама: <i>выдано = продано + возврат + недостача</i>.</li>
+                  <li>Обучение, бренд и материалы.</li>
+                </ul>
+                <ul class="vac-list space-y-1.5 text-ink/80 text-[15px] hidden" data-lang="en">
+                  <li>Product <b>on consignment</b> — no capital invested.</li>
+                  <li><b>Candidate flow</b> — we handle the recruiting.</li>
+                  <li>A control sheet that balances itself: <i>issued = sold + returned + shortage</i>.</li>
+                  <li>Training, brand and materials.</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 class="font-inter font-bold text-bordeaux text-sm uppercase tracking-wide mb-3"><span data-lang="es">Tu crecimiento</span><span data-lang="ru" class="hidden">Твой рост</span><span data-lang="en" class="hidden">Your growth</span></h4>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                  <div class="border border-ink/15 rounded-xl p-3 bg-parchment"><div class="text-[11px] uppercase tracking-wide text-gold-dark font-semibold"><span data-lang="es">Entrada</span><span data-lang="ru" class="hidden">Вход</span><span data-lang="en" class="hidden">Entry</span></div><div class="font-playfair font-bold text-ink text-base mt-1"><span data-lang="es">Vendedor</span><span data-lang="ru" class="hidden">Продавец</span><span data-lang="en" class="hidden">Seller</span></div></div>
+                  <div class="border-2 border-bordeaux rounded-xl p-3 bg-bordeaux text-cream"><div class="text-[11px] uppercase tracking-wide text-gold font-semibold"><span data-lang="es">Acá estás</span><span data-lang="ru" class="hidden">Ты здесь</span><span data-lang="en" class="hidden">You are here</span></div><div class="font-playfair font-bold text-base mt-1"><span data-lang="es">Coordinador</span><span data-lang="ru" class="hidden">Менеджер</span><span data-lang="en" class="hidden">Coordinator</span></div></div>
+                  <div class="border border-ink/15 rounded-xl p-3 bg-parchment"><div class="text-[11px] uppercase tracking-wide text-gold-dark font-semibold"><span data-lang="es">Escala</span><span data-lang="ru" class="hidden">Масштаб</span><span data-lang="en" class="hidden">Scale</span></div><div class="font-playfair font-bold text-ink text-base mt-1">Jefe de zona</div></div>
+                </div>
+              </div>
+
+              <div class="bg-parchment border border-gold/25 rounded-xl p-4">
+                <p class="text-ink/80 text-sm leading-relaxed" data-lang="es"><b class="text-bordeaux">No es pirámide:</b> cobrás por producto real que se vende, no por sumar gente. No pagás nada por entrar. El faltante de un vendedor sale de su comisión, no de la tuya.</p>
+                <p class="text-ink/80 text-sm leading-relaxed hidden" data-lang="ru"><b class="text-bordeaux">Это не пирамида:</b> платят за реально проданный продукт, а не за набор людей. За вход не платишь. Недостача продавца вычитается из его комиссии, не из твоей.</p>
+                <p class="text-ink/80 text-sm leading-relaxed hidden" data-lang="en"><b class="text-bordeaux">Not a pyramid:</b> you're paid for real product sold, not for adding people. No entry fee. A seller's shortage comes out of their commission, not yours.</p>
+              </div>
+
+              <a href="https://wa.me/541126466244?text=COORDINAR" target="_blank" class="btn-shine flex items-center justify-center gap-3 bg-bordeaux text-cream px-6 py-4 rounded-full font-bold text-lg hover:bg-bordeaux-dark transition-all">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                <span data-lang="es">Escribí "COORDINAR" por WhatsApp</span>
+                <span data-lang="ru" class="hidden">Напиши "COORDINAR" в WhatsApp</span>
+                <span data-lang="en" class="hidden">Write "COORDINAR" on WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FORMULARIO DE POSTULACIÓN ===== -->
+      <div class="reveal mt-12" id="postular">
+        <div class="bg-cream border border-gold/30 rounded-2xl p-6 md:p-8 shadow-sm">
+          <h3 class="font-playfair text-2xl md:text-3xl font-bold text-ink mb-2 text-center">
+            <span data-lang="es">Dejanos tus datos</span>
+            <span data-lang="ru" class="hidden">Оставь свои данные</span>
+            <span data-lang="en" class="hidden">Leave your details</span>
+          </h3>
+          <p class="text-ink/60 text-sm text-center mb-6 max-w-md mx-auto">
+            <span data-lang="es">Mandanos tu postulación — con CV o solo tu consulta. Te contactamos por WhatsApp.</span>
+            <span data-lang="ru" class="hidden">Отправь заявку — с резюме или просто вопрос. Свяжемся по WhatsApp.</span>
+            <span data-lang="en" class="hidden">Send your application — with a CV or just a question. We'll reach out via WhatsApp.</span>
+          </p>
+
+          <form name="postulaciones" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" action="/?ok=1#trabaja" id="vac-form" class="space-y-4">
+            <input type="hidden" name="form-name" value="postulaciones">
+            <p class="hidden"><label>No llenar: <input name="bot-field"></label></p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="vac-label" for="f-nombre"><span data-lang="es">Nombre</span><span data-lang="ru" class="hidden">Имя</span><span data-lang="en" class="hidden">Name</span></label>
+                <input class="vac-input" id="f-nombre" name="nombre" required autocomplete="name">
+              </div>
+              <div>
+                <label class="vac-label" for="f-wa"><span data-lang="es">WhatsApp / teléfono</span><span data-lang="ru" class="hidden">WhatsApp / телефон</span><span data-lang="en" class="hidden">WhatsApp / phone</span></label>
+                <input class="vac-input" id="f-wa" name="whatsapp" required autocomplete="tel" inputmode="tel">
+              </div>
+              <div>
+                <label class="vac-label" for="f-zona"><span data-lang="es">Barrio / zona</span><span data-lang="ru" class="hidden">Район / зона</span><span data-lang="en" class="hidden">Neighborhood / area</span></label>
+                <input class="vac-input" id="f-zona" name="zona">
+              </div>
+              <div>
+                <label class="vac-label" for="f-puesto"><span data-lang="es">Puesto</span><span data-lang="ru" class="hidden">Роль</span><span data-lang="en" class="hidden">Role</span></label>
+                <select class="vac-input" id="f-puesto" name="puesto">
+                  <option value="Vendedor">Vendedor / Продавец / Seller</option>
+                  <option value="Coordinador">Coordinador / Менеджер / Coordinator</option>
+                  <option value="Cualquiera">Cualquiera / Любая / Any</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="vac-label" for="f-msg"><span data-lang="es">Mensaje (opcional)</span><span data-lang="ru" class="hidden">Сообщение (необязательно)</span><span data-lang="en" class="hidden">Message (optional)</span></label>
+              <textarea class="vac-input" id="f-msg" name="mensaje" rows="3"></textarea>
+            </div>
+
+            <div>
+              <label class="vac-label" for="f-cv"><span data-lang="es">CV / currículum (opcional — PDF, DOC o foto)</span><span data-lang="ru" class="hidden">Резюме (необязательно — PDF, DOC или фото)</span><span data-lang="en" class="hidden">CV / résumé (optional — PDF, DOC or photo)</span></label>
+              <input class="vac-input" type="file" id="f-cv" name="cv" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+            </div>
+
+            <button type="submit" class="btn-shine w-full flex items-center justify-center gap-3 bg-bordeaux text-cream px-6 py-4 rounded-full font-bold text-lg hover:bg-bordeaux-dark transition-all">
+              <i data-lucide="send" class="w-5 h-5"></i>
+              <span data-lang="es">Enviar postulación</span>
+              <span data-lang="ru" class="hidden">Отправить заявку</span>
+              <span data-lang="en" class="hidden">Send application</span>
+            </button>
+          </form>
+
+          <div id="vac-form-msg" class="hidden mt-4 text-center text-bordeaux font-semibold text-lg"></div>
+
+          <div class="mt-6 pt-5 border-t border-gold/20 text-center">
+            <p class="text-ink/50 text-sm mb-3">
+              <span data-lang="es">¿Preferís WhatsApp? Escribinos directo y adjuntá tu CV en el chat.</span>
+              <span data-lang="ru" class="hidden">Удобнее WhatsApp? Напиши напрямую и приложи резюме в чате.</span>
+              <span data-lang="en" class="hidden">Prefer WhatsApp? Write us directly and attach your CV in the chat.</span>
+            </p>
+            <a href="https://wa.me/541126466244?text=Hola!%20Quiero%20postularme%20en%20PicadaRica" target="_blank" class="inline-flex items-center gap-2 border-2 border-bordeaux text-bordeaux px-6 py-3 rounded-full font-semibold hover:bg-bordeaux hover:text-cream transition-all">
+              <i data-lucide="message-circle" class="w-5 h-5"></i>
+              <span data-lang="es">Postularme por WhatsApp</span>
+              <span data-lang="ru" class="hidden">Заявка через WhatsApp</span>
+              <span data-lang="en" class="hidden">Apply via WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      (function(){
+        var form = document.getElementById('vac-form');
+        if (!form) return;
+        var box = document.getElementById('vac-form-msg');
+        var ok = { es: '¡Gracias! Recibimos tu postulación. Te escribimos pronto por WhatsApp.', ru: 'Спасибо! Заявку получили. Скоро напишем в WhatsApp.', en: 'Thanks! We got your application. We\'ll message you soon on WhatsApp.' };
+        var onNetlify = /netlify\.app$/.test(location.hostname);
+        function waFallback(fd){
+          var t = 'Hola! Quiero postularme en PicadaRica.'
+            + '%0ANombre: ' + encodeURIComponent(fd.get('nombre') || '')
+            + '%0AWhatsApp: ' + encodeURIComponent(fd.get('whatsapp') || '')
+            + '%0AZona: ' + encodeURIComponent(fd.get('zona') || '')
+            + '%0APuesto: ' + encodeURIComponent(fd.get('puesto') || '')
+            + '%0AMensaje: ' + encodeURIComponent(fd.get('mensaje') || '');
+          window.open('https://wa.me/541126466244?text=' + t, '_blank');
+        }
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          var lang = document.documentElement.lang || 'es';
+          var fd = new FormData(form);
+          if (onNetlify) {
+            fetch('/', { method: 'POST', body: fd })
+              .then(function(r){ if(!r.ok) throw 0; form.style.display='none'; box.textContent = ok[lang]||ok.es; box.classList.remove('hidden'); box.scrollIntoView({behavior:'smooth',block:'center'}); })
+              .catch(function(){ waFallback(fd); });
+          } else {
+            // GitHub Pages u otro host sin backend: derivamos a WhatsApp con los datos
+            waFallback(fd);
+            form.style.display='none'; box.textContent = ok[lang]||ok.es; box.classList.remove('hidden');
+          }
+        });
+      })();
+    </script>
   </section>
 
   <!-- === CTA FINAL === -->
