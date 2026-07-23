@@ -1,142 +1,88 @@
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PicadaRica — Pedí ahora 🥩</title>
-  <meta name="description" content="Jerky premium de Buenos Aires. Proteína real, cero verso. Pedí por WhatsApp o Mercado Libre.">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#241210">
-  <!-- Open Graph: превью при шаринге ссылки /go в соцсетях -->
-  <meta property="og:title" content="PicadaRica — Jerky premium 🥩">
-  <meta property="og:description" content="Proteína real, cero verso. Pedí ahora con 10% off (GERKE10).">
-  <meta property="og:type" content="website">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: { extend: { colors: {
-        bordeaux: '#7B1C1C', gold: '#C8A674', cream: '#F5EAD3',
-        parchment: '#FBF4E4', dark: '#241210',
-      } } }
-    }
-  </script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .cta { transition: transform .18s, box-shadow .18s; }
-    .cta:active { transform: scale(.97); }
-    @media (hover: hover) { .cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.35); } }
-    .shine { background: linear-gradient(100deg, #C8A674 0%, #E4CFA0 50%, #C8A674 100%); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PicadaRica — Pedí ahora 🥩</title>
+<meta name="description" content="Jerky premium de Buenos Aires. Proteína real, cero verso. Pedí por WhatsApp.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#241210">
+<meta property="og:title" content="PicadaRica — Jerky premium 🥩">
+<meta property="og:description" content="Proteína real, cero verso. Pedí por WhatsApp.">
+<meta property="og:type" content="website">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config = { theme: { extend: { colors: {
+  bordeaux:'#7B1C1C', gold:'#C8A674', cream:'#F5EAD3', dark:'#241210' } } } }
+</script>
+<style>
+body{font-family:'Inter',sans-serif}
+.cta{transition:transform .16s}.cta:active{transform:scale(.97)}
+@media(hover:hover){.cta:hover{transform:translateY(-2px)}}
+</style>
 </head>
 <body class="bg-dark min-h-screen text-cream">
+  <main class="max-w-md mx-auto px-4 py-6">
 
-  <main class="max-w-md mx-auto px-5 py-8 flex flex-col items-center">
-
-    <!-- LOGO -->
-    <div class="w-20 h-20 mb-3">
-      <svg viewBox="0 0 120 120" class="w-full h-full">
-        <circle cx="60" cy="60" r="55" fill="#7B1C1C"/>
-        <circle cx="60" cy="60" r="50" fill="none" stroke="#C8A674" stroke-width="1.2"/>
-        <rect x="15" y="48" width="90" height="24" rx="3" fill="#7B1C1C" stroke="#C8A674" stroke-width="0.8"/>
-        <text x="60" y="65" font-family="Georgia,serif" font-size="14" font-weight="900" fill="#F5EAD3" text-anchor="middle">PICADARICA</text>
-      </svg>
-    </div>
-
-    <!-- TÍTULO + CLAIM (rioplatense) -->
-    <h1 class="text-3xl font-black text-cream tracking-tight">PicadaRica</h1>
-    <p class="text-gold text-sm font-semibold mt-1 mb-1">Jerky premium · de campo a bolsillo</p>
-    <p class="text-cream/50 text-sm text-center mb-5">Proteína real. Cero verso. 🥩</p>
-
-    <!-- PROMO GERKE10 -->
-    <div class="w-full shine rounded-2xl px-4 py-3 mb-6 text-center">
-      <div class="text-dark text-xs font-bold uppercase tracking-wider">Código de descuento</div>
-      <div class="text-dark text-2xl font-black tracking-widest leading-tight">GERKE10</div>
-      <div class="text-dark/70 text-xs font-semibold">10% off en tu primer pedido</div>
-    </div>
-
-    <!-- CTA PRINCIPALES -->
-    <div class="w-full space-y-3">
-
-      <!-- WhatsApp (canal principal + atribución por texto pre-cargado) -->
-      <a href="https://wa.me/541126466244?text=%C2%A1Hola%20PicadaRica!%20%F0%9F%A5%A9%20Vengo%20de%20las%20redes%20y%20quiero%20hacer%20un%20pedido.%20(C%C3%B3digo%3A%20GERKE10)"
-         target="_blank" rel="noopener"
-         class="cta flex items-center gap-4 bg-green-600 rounded-2xl p-4 shadow-lg">
-        <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center flex-shrink-0">
-          <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="font-extrabold text-white text-lg leading-tight">Pedí por WhatsApp</div>
-          <div class="text-white/70 text-sm">Packs 250g y 1kg · respuesta directa</div>
-        </div>
-        <svg class="w-5 h-5 text-white/50 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- Mercado Libre — Charqui 200g "El Doble" (2×100g) -->
-      <a href="https://www.mercadolibre.com.ar/charqui-200g-picadarica--el-doble--beef-jerky-artesanal-ar/up/MLAU4091203819"
-         target="_blank" rel="noopener"
-         class="cta flex items-center gap-4 bg-yellow-400 rounded-2xl p-4 shadow-lg">
-        <div class="w-12 h-12 bg-black/10 rounded-xl flex items-center justify-center flex-shrink-0">
-          <svg class="w-7 h-7 text-black/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="font-extrabold text-black/90 text-lg leading-tight">Mercado Libre</div>
-          <div class="text-black/60 text-sm">Charqui 200g «El Doble» · 2×100g · envío</div>
-        </div>
-        <svg class="w-5 h-5 text-black/40 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- Sitio web / tienda -->
-      <a href="https://neuroba.github.io/picadarica/"
-         target="_blank" rel="noopener"
-         class="cta flex items-center gap-4 bg-bordeaux border border-gold/30 rounded-2xl p-4 shadow-lg">
-        <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
-          <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="font-extrabold text-cream text-lg leading-tight">Nuestro sitio</div>
-          <div class="text-cream/60 text-sm">Productos, precios e historia</div>
-        </div>
-        <svg class="w-5 h-5 text-gold/50 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-    </div>
-
-    <!-- SEGUINOS -->
-    <div class="w-full mt-8">
-      <div class="text-gold/50 text-xs font-semibold uppercase tracking-widest text-center mb-3">Seguinos</div>
-      <div class="grid grid-cols-3 gap-3">
-
-        <a href="https://instagram.com/picadarica" target="_blank" rel="noopener" class="cta bg-bordeaux/25 border border-gold/15 rounded-xl p-3 text-center">
-          <div class="w-9 h-9 mx-auto bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 rounded-full flex items-center justify-center mb-1.5">
-            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-          </div>
-          <div class="text-cream/80 text-xs font-semibold">Instagram</div>
-        </a>
-
-        <a href="https://www.tiktok.com/@picadarica" target="_blank" rel="noopener" class="cta bg-bordeaux/25 border border-gold/15 rounded-xl p-3 text-center">
-          <div class="w-9 h-9 mx-auto bg-black rounded-full flex items-center justify-center mb-1.5">
-            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
-          </div>
-          <div class="text-cream/80 text-xs font-semibold">TikTok</div>
-        </a>
-
-        <a href="https://t.me/picadarica" target="_blank" rel="noopener" class="cta bg-bordeaux/25 border border-gold/15 rounded-xl p-3 text-center">
-          <div class="w-9 h-9 mx-auto bg-blue-500 rounded-full flex items-center justify-center mb-1.5">
-            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-          </div>
-          <div class="text-cream/80 text-xs font-semibold">Telegram</div>
-        </a>
-
+    <!-- HEADER: логотип без плашки, буквы кремовые -->
+    <div class="flex items-center gap-3 mb-5">
+      <img src="logo-dark.png" alt="PicadaRica" class="w-28 h-auto flex-shrink-0 drop-shadow-lg">
+      <div>
+        <h1 class="text-2xl font-black leading-none">PicadaRica</h1>
+        <p class="text-gold text-xs font-semibold mt-1">Charqui artesanal · Cero verso 🥩</p>
       </div>
     </div>
 
-    <!-- FOOTER -->
-    <div class="mt-10 text-center">
-      <p class="text-cream/30 text-xs">Buenos Aires 🇦🇷 · Envíos a todo el país</p>
-      <p class="text-cream/20 text-[11px] mt-1">Usá <span class="text-gold/60 font-semibold">GERKE10</span> y llevate 10% off</p>
+    <!-- BENTO GRID -->
+    <div class="grid grid-cols-2 gap-3">
+
+      <!-- Foto producto — coño de res, imagen completa -->
+      <div class="col-span-2 relative rounded-3xl overflow-hidden ring-1 ring-gold/20">
+        <img src="cono.jpg" class="w-full h-auto block" alt="Charqui de res PicadaRica">
+        <div class="absolute inset-x-0 bottom-0 h-2/5" style="background:linear-gradient(180deg,rgba(36,18,16,0),rgba(36,18,16,.92))"></div>
+        <div class="absolute bottom-0 p-4">
+          <div class="text-cream font-black text-xl leading-tight drop-shadow">Charqui de res</div>
+          <div class="text-cream/75 text-sm drop-shadow">Proteína real, ahumado a leña</div>
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/541126466244?text=%C2%A1Hola%20PicadaRica!%20%F0%9F%A5%A9%20Vengo%20de%20las%20redes%20y%20quiero%20hacer%20un%20pedido." target="_blank" rel="noopener" class="cta col-span-2 flex items-center gap-4 bg-green-600 rounded-3xl p-4 shadow-lg shadow-black/40">
+        <div class="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+        </div>
+        <div class="flex-1"><div class="font-extrabold text-white text-lg leading-tight">Pedí por WhatsApp</div>
+        <div class="text-white/70 text-sm">Respuesta directa</div></div>
+        <svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- Sitio -->
+      <a href="https://neuroba.github.io/picadarica/" target="_blank" rel="noopener" class="cta bg-bordeaux rounded-3xl p-4 flex flex-col justify-between ring-1 ring-gold/20" style="min-height:7rem">
+        <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/></svg>
+        <div><div class="font-extrabold text-cream leading-tight">Nuestro sitio</div><div class="text-cream/60 text-xs">Precios e historia</div></div>
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://instagram.com/picadarica" target="_blank" rel="noopener" class="cta rounded-3xl p-4 flex flex-col justify-between ring-1 ring-white/10" style="min-height:7rem;background:linear-gradient(135deg,#7928a1,#ec4899,#f59e0b)">
+        <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        <div class="font-extrabold text-white leading-tight">Instagram</div>
+      </a>
+
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@picadarica" target="_blank" rel="noopener" class="cta bg-black rounded-3xl p-4 flex items-center gap-2 ring-1 ring-white/10">
+        <svg class="w-6 h-6 text-white flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
+        <span class="font-extrabold text-white">TikTok</span>
+      </a>
+
+      <!-- Telegram -->
+      <a href="https://t.me/picadarica" target="_blank" rel="noopener" class="cta bg-blue-500 rounded-3xl p-4 flex items-center gap-2 ring-1 ring-white/10">
+        <svg class="w-6 h-6 text-white flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        <span class="font-extrabold text-white">Telegram</span>
+      </a>
     </div>
 
+    <p class="text-cream/25 text-xs text-center mt-6">Buenos Aires 🇦🇷 · Envíos a todo el país</p>
   </main>
 </body>
 </html>
