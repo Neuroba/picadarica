@@ -156,6 +156,21 @@
     html.dark .stamp-logo .logo-light-img { display: none; }
     html.dark .stamp-logo .logo-dark-img { display: block; }
 
+    /* Header: barra transparente al hacer scroll (quedan solo logo/nav/idioma) */
+    header { transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, backdrop-filter .3s ease; }
+    header.scrolled { background: transparent !important; backdrop-filter: none !important; border-bottom-color: transparent !important; box-shadow: none !important; }
+
+    /* Secci\00f3n producto en oscuro (scoped, no afecta otras secciones) */
+    #producto { background: #241210 !important; }
+    #producto [class*="bg-cream"] { background: rgba(245,234,211,0.05) !important; box-shadow: none !important; }
+    #producto [class*="border-gold"] { border-color: rgba(200,166,116,0.18) !important; }
+    #producto [class*="text-ink"] { color: rgba(232,220,200,0.82) !important; }
+    #producto [class*="text-bordeaux-dark"] { color: #F5EAD3 !important; }
+    #producto [class*="text-bordeaux"]:not([class*="text-bordeaux-dark"]) { color: #C8A674 !important; }
+    #producto [class*="text-terracotta"], #producto [class*="text-gold-dark"] { color: #C8A674 !important; }
+    #producto [class*="bg-bordeaux"] { background: rgba(200,166,116,0.14) !important; }
+    #producto [class*="bg-gold"] { background: rgba(200,166,116,0.22) !important; }
+
     /* FIX: capas decorativas SIEMPRE fuera de flujo. Con reduced-motion perdían
        position:absolute (solo estaba dentro de @media no-preference) y se volvían
        items flex, empujando el contenido del hero hacia la derecha. */
@@ -342,7 +357,7 @@
   <!-- === HEADER === -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-parchment/90 backdrop-blur-md border-b border-gold/20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 md:h-20">
+      <div class="flex items-center justify-between h-12 md:h-14">
         <a href="#" class="flex items-center gap-3 group">
           <div class="stamp-logo">
             <img class="logo-light-img" src="images/picadarica-logo.svg" alt="PicadaRica" width="120" height="101">
@@ -526,7 +541,7 @@
   </section>
 
   <!-- === PRODUCTO === -->
-  <section id="producto" class="relative py-24 bg-parchment craft-texture">
+  <section id="producto" class="relative py-24">
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="reveal text-center mb-16">
         <span class="inline-block text-gold-dark text-sm font-semibold tracking-widest uppercase mb-3" data-lang="es">Nuestro producto</span>
@@ -545,19 +560,8 @@
       </div>
 
       <div class="bento-grid grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-min">
-        <div class="bento-card md:col-span-7 md:row-span-3 relative rounded-3xl bg-cream border border-gold/30 shadow-lg min-h-[420px] md:min-h-[540px] overflow-hidden">
-          <div class="corner-ornament corner-tl" style="z-index:3"></div>
-          <div class="corner-ornament corner-tr" style="z-index:3"></div>
-          <div class="corner-ornament corner-bl" style="z-index:3"></div>
-          <div class="corner-ornament corner-br" style="z-index:3"></div>
-          <div id="product-carousel" class="relative w-full h-full">
-            <div class="carousel-slide active">
-              <img src="https://i.postimg.cc/YSvDNYws/Gemini-Generated-Image-2zu6kt2zu6kt2zu6.png" alt="PicadaRica — Producto fresco" class="w-full h-full object-cover" loading="lazy">
-              <span class="carousel-label" data-lang="es">Producto fresco</span>
-              <span class="carousel-label hidden" data-lang="ru">Свежее мясо</span>
-              <span class="carousel-label hidden" data-lang="en">Fresh product</span>
-            </div>
-          </div>
+        <div class="md:col-span-7 md:row-span-3 relative flex items-center justify-center min-h-[380px] md:min-h-[540px]">
+          <img src="images/cono-blend.jpg" alt="PicadaRica — Charqui de res" class="w-full h-full object-contain" loading="lazy">
         </div>
 
         <div class="bento-card md:col-span-5 bg-cream border border-gold/30 rounded-2xl p-4 md:p-5 text-center shadow-sm flex flex-col justify-center">
@@ -1871,7 +1875,7 @@
 
     const header = document.querySelector('header');
     window.addEventListener('scroll', () => {
-      header.classList.toggle('shadow-lg', window.scrollY > 10);
+      header.classList.toggle('scrolled', window.scrollY > 10);
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
